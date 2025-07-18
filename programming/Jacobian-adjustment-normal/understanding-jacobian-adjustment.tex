@@ -248,7 +248,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{f8f8f8}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, breakable, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, sharp corners, enhanced, borderline west={3pt}{0pt}{shadecolor}, frame hidden, boxrule=0pt, colback={codebgcolor}]}{\end{tcolorbox}}\fi
 \makeatother
 
 \ifLuaTeX
@@ -272,7 +272,7 @@
 \title{Understanding Jacobian Adjustments for Constrained Parameters in
 Stan}
 \author{Yingqi Jing}
-\date{July 15, 2025}
+\date{July 18, 2025}
 
 \begin{document}
 \maketitle
@@ -415,7 +415,23 @@ log posterior density (lp\_\_) is biased.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{ \{}
+  \DataTypeTok{int}\NormalTok{\textless{}}\KeywordTok{lower}\NormalTok{=}\DecValTok{0}\NormalTok{\textgreater{} N; }\CommentTok{// number of observations}
+  \DataTypeTok{vector}\NormalTok{[N] y; }\CommentTok{// observed data}
+\NormalTok{\}}
 
+\KeywordTok{parameters}\NormalTok{ \{}
+  \DataTypeTok{real}\NormalTok{ mu; }\CommentTok{// mean parameter}
+  \DataTypeTok{real}\NormalTok{ sigma; }\CommentTok{// standard deviation parameter}
+\NormalTok{\}}
+\KeywordTok{model}\NormalTok{ \{}
+  \CommentTok{// Priors}
+  \KeywordTok{target +=}\NormalTok{ normal\_lpdf(mu | }\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{); }\CommentTok{// prior for mean}
+  \KeywordTok{target +=}\NormalTok{ normal\_lpdf(sigma | }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{); }\CommentTok{// prior for standard deviation}
+  
+  \CommentTok{// Likelihood}
+  \KeywordTok{target +=}\NormalTok{ normal\_lpdf(y | mu, sigma); }\CommentTok{// data follows normal distribution}
+\NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 

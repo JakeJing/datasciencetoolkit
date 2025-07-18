@@ -1,10 +1,8 @@
 ---
-title: "About"
+title: "About Data Science Toolkit"
 ---
-
-# About Data Science Toolkits
 
 ## Our Mission
 
-Data Science Toolkits aims to democratize data science education by providing comprehensive, practical resources for learners and practitioners at all levels. We believe that the right tools and knowledge should be accessible to everyone interested in extracting insights from data.
+Data Science Toolkit aims to provide comprehensive, practical resources for learners and practitioners. I believe that the right tools and knowledge should be accessible to everyone interested in learning to become a data scientist.
 

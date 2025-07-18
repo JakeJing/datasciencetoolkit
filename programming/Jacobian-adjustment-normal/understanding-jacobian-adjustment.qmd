@@ -36,6 +36,7 @@ format:
 # fig-cap-location: bottom
 # fig-width: 16
 # fig-height: 8
+code-fold: false
 bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
 csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
 link-citations: true
@@ -216,7 +217,7 @@ print(fit_norm, pars = c("mu", "sigma", "lp__"))
 
 Now we turn to another model by removing the constraint on $\sigma$. In this case, the parameter $\sigma$ is not a constrained variable, and there is no Jacobian adjustment handled by Stan. This means that the log posterior density (lp__) is biased.
 
-```{.stan include="./Models/normal_no_constraint.stan"}
+```{.stan include="./Models/normal_no_constraint_sigma.stan"}
 ```
 
 ```{r}
@@ -367,6 +368,3 @@ Related links
 - [Laplace method and Jacobian of parameter transformation](https://users.aalto.fi/~ave/casestudies/Jacobian/jacobian.html)
 
 
-\clearpage
-
-# References

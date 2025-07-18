@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yingqi Jing">
-<meta name="dcterms.date" content="2025-07-15">
+<meta name="dcterms.date" content="2025-07-18">
 
-<title>Understanding Jacobian Adjustments for Constrained Parameters in Stan – Data Science Toolkits</title>
+<title>Understanding Jacobian Adjustments for Constrained Parameters in Stan – Data Science Toolkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -146,7 +146,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Data Science Toolkits</span>
+    <span class="navbar-title">Data Science Toolkit</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -156,7 +156,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../programming/programming.html"> 
+    <a class="nav-link" href="../../programming/coverpage.html"> 
 <span class="menu-text">Programming</span></a>
   </li>  
   <li class="nav-item">
@@ -224,7 +224,6 @@ window.Quarto = {
   <li><a href="#comparison-of-results" id="toc-comparison-of-results" class="nav-link" data-scroll-target="#comparison-of-results"><span class="header-section-number">1.2.6</span> Comparison of Results</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">2</span> References</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="understanding-jacobian-adjustment.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -250,7 +249,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 15, 2025</p>
+      <p class="date">July 18, 2025</p>
     </div>
   </div>
   
@@ -281,10 +280,7 @@ window.Quarto = {
 <h2 data-number="1.1" class="anchored" data-anchor-id="simulate-data"><span class="header-section-number">1.1</span> Simulate data</h2>
 <p>I will first simulate some data from a normal distribution with mean 0 and standard deviation 20. A large standard deviation is chosen to make the effect of Jacobian adjustment more pronounced.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data_norm <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">N =</span> <span class="dv">100</span>, <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="posterior-parameter-estimates" class="level2" data-number="1.2">
@@ -313,29 +309,39 @@ window.Quarto = {
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">target +=</span> normal_lpdf(y | mu, sigma); <span class="co">// data follows normal distribution</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>md_norm <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">file =</span> <span class="st">"./Models/normal.stan"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fit_norm <span class="ot">&lt;-</span> <span class="fu">sampling</span>(md_norm, data_norm,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">chains =</span> <span class="dv">1</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_norm, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"mu"</span>, <span class="st">"sigma"</span>, <span class="st">"lp__"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="model-2-unconstrained-sigma" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="model-2-unconstrained-sigma"><span class="header-section-number">1.2.2</span> Model 2: unconstrained <span class="math inline">\(\sigma\)</span></h3>
 <p>Now we turn to another model by removing the constraint on <span class="math inline">\(\sigma\)</span>. In this case, the parameter <span class="math inline">\(\sigma\)</span> is not a constrained variable, and there is no Jacobian adjustment handled by Stan. This means that the log posterior density (lp__) is biased.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; N; <span class="co">// number of observations</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[N] y; <span class="co">// observed data</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> mu; <span class="co">// mean parameter</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> sigma; <span class="co">// standard deviation parameter</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Priors</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">target +=</span> normal_lpdf(mu | <span class="dv">0</span>, <span class="dv">10</span>); <span class="co">// prior for mean</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">target +=</span> normal_lpdf(sigma | <span class="dv">0</span>, <span class="dv">5</span>); <span class="co">// prior for standard deviation</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Likelihood</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">target +=</span> normal_lpdf(y | mu, sigma); <span class="co">// data follows normal distribution</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>md_norm_no_constraint <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">file =</span> <span class="st">"./Models/normal_no_constraint_sigma.stan"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fit_norm_no_constraint <span class="ot">&lt;-</span> <span class="fu">sampling</span>(md_norm_no_constraint, data_norm,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">chains =</span> <span class="dv">1</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_norm_no_constraint, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"mu"</span>, <span class="st">"sigma"</span>, <span class="st">"lp__"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="model-3-exponential-transformation-of-unconstrained-sigma_z-and-jacobian-adjustment" class="level3" data-number="1.2.3">
@@ -382,15 +388,12 @@ f_Y(y) \cdot \left| \frac{dy}{dx} \right| = f_X(x)\]</span></p>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>md_norm_exp_jacobian <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">file =</span> <span class="st">"./Models/normal_exp_sigma_jacobian.stan"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fit_norm_exp_jacobian <span class="ot">&lt;-</span> <span class="fu">sampling</span>(md_norm_exp_jacobian, data_norm,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">chains =</span> <span class="dv">1</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_norm_exp_jacobian, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"mu"</span>, <span class="st">"lp__"</span>))</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_norm_exp_jacobian, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"mu"</span>, <span class="st">"sigma"</span>, <span class="st">"lp__"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="model-4-transformation-of-sigma-in-the-transformed-parameters-block-no-jacobian-needed" class="level3" data-number="1.2.4">
@@ -418,14 +421,11 @@ f_Y(y) \cdot \left| \frac{dy}{dx} \right| = f_X(x)\]</span></p>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">target +=</span> normal_lpdf(y | mu, sigma);</span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>md_norm_transform_parameters <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">file =</span> <span class="st">"./Models/normal_transform_parameters.stan"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fit_norm_transform_parameters <span class="ot">&lt;-</span> <span class="fu">sampling</span>(md_norm_transform_parameters, data_norm,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">chains =</span> <span class="dv">1</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_norm_transform_parameters, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"mu"</span>, <span class="st">"sigma"</span>, <span class="st">"lp__"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="model-5-log-transformation-of-sigma-in-the-model-block-as-a-local-variable-prior-density-changed-not-related-to-jacobian-adjustment" class="level3" data-number="1.2.5">
@@ -464,14 +464,11 @@ f_Y(y) \cdot \left| \frac{dy}{dx} \right| = f_X(x)\]</span></p>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">target +=</span> normal_lpdf(y | mu, sigma);</span>
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>md_norm_transform_local <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">file =</span> <span class="st">"./Models/normal_transform_local.stan"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fit_norm_transform_local <span class="ot">&lt;-</span> <span class="fu">sampling</span>(md_norm_transform_local, data_norm,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">chains =</span> <span class="dv">1</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fit_norm_transform_local, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">"mu"</span>, <span class="st">"sigma"</span>, <span class="st">"lp__"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section>
 <section id="comparison-of-results" class="level3" data-number="1.2.6">
@@ -486,14 +483,11 @@ f_Y(y) \cdot \left| \frac{dy}{dx} \right| = f_X(x)\]</span></p>
 <li><a href="https://mc-stan.org/docs/reference-manual/transforms.html">Transforms</a></li>
 <li><a href="https://users.aalto.fi/~ave/casestudies/Jacobian/jacobian.html">Laplace method and Jacobian of parameter transformation</a></li>
 </ul>
-</section>
-</section>
-</section>
-<section id="references" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> References</h1>
 
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

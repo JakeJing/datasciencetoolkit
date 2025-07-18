@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Data Science Toolkits"
+  title: "Data Science Toolkit"
   description: "Comprehensive guides and tools for data science"
   navbar:
     left:

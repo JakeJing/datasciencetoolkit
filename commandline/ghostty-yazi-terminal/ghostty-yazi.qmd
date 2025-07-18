@@ -212,6 +212,3 @@ mv dotfiles/.config/yazi -P ~/.config/yazi/
 
 
 
-\clearpage
-
-# References
