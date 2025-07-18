@@ -146,9 +146,9 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#what-youll-find-here" id="toc-what-youll-find-here" class="nav-link active" data-scroll-target="#what-youll-find-here">What You’ll Find Here</a>
   <ul class="collapse">
-  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming">🧰 Programming</a></li>
-  <li><a href="#command-line-tools" id="toc-command-line-tools" class="nav-link" data-scroll-target="#command-line-tools">📚 Command Line Tools</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">📖 Resources</a></li>
+  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming">🚀 Programming</a></li>
+  <li><a href="#command-line-tools" id="toc-command-line-tools" class="nav-link" data-scroll-target="#command-line-tools">🖥️ Command Line Tools</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">📚 Resources</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -179,30 +179,30 @@ ul.task-list li input[type="checkbox"] {
 <section id="what-youll-find-here" class="level2">
 <h2 class="anchored" data-anchor-id="what-youll-find-here">What You’ll Find Here</h2>
 <section id="programming" class="level3">
-<h3 class="anchored" data-anchor-id="programming">🧰 <a href="./programming/coverpage.html">Programming</a></h3>
+<h3 class="anchored" data-anchor-id="programming">🚀 <a href="./programming/coverpage.html">Programming</a></h3>
 <p>Curated collections of programming languages for specific data science tasks:</p>
 <ul>
-<li><strong>R Ecosystem</strong>: Tidyverse, and statistical packages</li>
-<li><strong>Stan</strong>: Bayesian analysis, Probabilistic programming</li>
-<li><strong>Data Visualization</strong>: ggplot2, Plotly</li>
+<li>🧪 <strong>R Ecosystem</strong>: Tidyverse, and statistical packages</li>
+<li>📈 <strong>Stan</strong>: Bayesian analysis, Probabilistic programming</li>
+<li>🎨 <strong>Data Visualization</strong>: ggplot2, Plotly</li>
 </ul>
 </section>
 <section id="command-line-tools" class="level3">
-<h3 class="anchored" data-anchor-id="command-line-tools">📚 <a href="./commandline/coverpage.html">Command Line Tools</a></h3>
+<h3 class="anchored" data-anchor-id="command-line-tools">🖥️ <a href="./commandline/coverpage.html">Command Line Tools</a></h3>
 <p>Step-by-step guides and hands-on examples:</p>
 <ul>
-<li><strong>Ghostty/Kitty</strong></li>
-<li><strong>Yazi/Vifm</strong></li>
-<li><strong>Visidata</strong></li>
+<li>🧮 <strong>Ghostty / Kitty</strong></li>
+<li>🗂️ <strong>Yazi / Vifm</strong></li>
+<li>📊 <strong>Visidata</strong></li>
 </ul>
 </section>
 <section id="resources" class="level3">
-<h3 class="anchored" data-anchor-id="resources">📖 <a href="resources.qmd">Resources</a></h3>
+<h3 class="anchored" data-anchor-id="resources">📚 <a href="resources.qmd">Resources</a></h3>
 <p>Additional learning materials:</p>
 <ul>
-<li>Recommended books and courses</li>
-<li>Datasets for practice</li>
-<li>Community resources</li>
+<li>📖 <strong>Recommended Books and Courses</strong></li>
+<li>📂 <strong>Datasets for Practice</strong></li>
+<li>🌐 <strong>Community Resources</strong></li>
 </ul>
 
 
@@ -302,7 +302,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/JakeJing\.github\.io\/datasciencetoolkit\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

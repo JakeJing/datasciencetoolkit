@@ -74,21 +74,21 @@
     "href": "commandline/ghostty-yazi-terminal/ghostty-yazi.html#add-configuration-file-and-keymap-for-yazi",
     "title": "Transform Your Terminal with Ghostty and Yazi",
     "section": "3.3 add configuration file and keymap for yazi",
-    "text": "3.3 add configuration file and keymap for yazi\n# clone my dotfiles\ngit clone https://github.com/JakeJing/dotfiles.git\n# move yazi config\nmv dotfiles/.config/yazi -P ~/.config/yazi/"
+    "text": "3.3 add configuration file and keymap for yazi\n# clone my dotfiles\ngit clone https://github.com/JakeJing/dotfiles.git\n# move yazi config\nmv dotfiles/.config/yazi -P ~/.config/yazi/\n\n\n\nUseful Yazi Keybindings"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Welcome to Data Science Toolkit",
     "section": "",
-    "text": "Curated collections of programming languages for specific data science tasks:\n\nR Ecosystem: Tidyverse, and statistical packages\nStan: Bayesian analysis, Probabilistic programming\nData Visualization: ggplot2, Plotly\n\n\n\n\nStep-by-step guides and hands-on examples:\n\nGhostty/Kitty\nYazi/Vifm\nVisidata\n\n\n\n\nAdditional learning materials:\n\nRecommended books and courses\nDatasets for practice\nCommunity resources"
+    "text": "Curated collections of programming languages for specific data science tasks:\n\n🧪 R Ecosystem: Tidyverse, and statistical packages\n📈 Stan: Bayesian analysis, Probabilistic programming\n🎨 Data Visualization: ggplot2, Plotly\n\n\n\n\nStep-by-step guides and hands-on examples:\n\n🧮 Ghostty / Kitty\n🗂️ Yazi / Vifm\n📊 Visidata\n\n\n\n\nAdditional learning materials:\n\n📖 Recommended Books and Courses\n📂 Datasets for Practice\n🌐 Community Resources"
   },
   {
     "objectID": "index.html#what-youll-find-here",
     "href": "index.html#what-youll-find-here",
     "title": "Welcome to Data Science Toolkit",
     "section": "",
-    "text": "Curated collections of programming languages for specific data science tasks:\n\nR Ecosystem: Tidyverse, and statistical packages\nStan: Bayesian analysis, Probabilistic programming\nData Visualization: ggplot2, Plotly\n\n\n\n\nStep-by-step guides and hands-on examples:\n\nGhostty/Kitty\nYazi/Vifm\nVisidata\n\n\n\n\nAdditional learning materials:\n\nRecommended books and courses\nDatasets for practice\nCommunity resources"
+    "text": "Curated collections of programming languages for specific data science tasks:\n\n🧪 R Ecosystem: Tidyverse, and statistical packages\n📈 Stan: Bayesian analysis, Probabilistic programming\n🎨 Data Visualization: ggplot2, Plotly\n\n\n\n\nStep-by-step guides and hands-on examples:\n\n🧮 Ghostty / Kitty\n🗂️ Yazi / Vifm\n📊 Visidata\n\n\n\n\nAdditional learning materials:\n\n📖 Recommended Books and Courses\n📂 Datasets for Practice\n🌐 Community Resources"
   },
   {
     "objectID": "commandline/coverpage.html",

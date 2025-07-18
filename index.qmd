@@ -6,24 +6,26 @@ subtitle: "This website provides comprehensive guides, tutorials, and resources 
 
 ## What You'll Find Here
 
-### 🧰 [Programming](programming/coverpage.qmd)
+### 🚀 [Programming](programming/coverpage.qmd)
 Curated collections of programming languages for specific data science tasks:
 
-- **R Ecosystem**: Tidyverse, and statistical packages
-- **Stan**: Bayesian analysis, Probabilistic programming
-- **Data Visualization**: ggplot2, Plotly
+* 🧪 **R Ecosystem**: Tidyverse, and statistical packages
+* 📈 **Stan**: Bayesian analysis, Probabilistic programming
+* 🎨 **Data Visualization**: ggplot2, Plotly
 
-### 📚 [Command Line Tools](commandline/coverpage.qmd)
+
+### 🖥️ [Command Line Tools](commandline/coverpage.qmd)
 Step-by-step guides and hands-on examples:
 
-- **Ghostty/Kitty**
-- **Yazi/Vifm**
-- **Visidata**
+* 🧮 **Ghostty / Kitty**
+* 🗂️ **Yazi / Vifm**
+* 📊 **Visidata**
 
-### 📖 [Resources](resources.qmd)
+
+### 📚 [Resources](resources.qmd)
 Additional learning materials:
 
-- Recommended books and courses
-- Datasets for practice
-- Community resources
+* 📖 **Recommended Books and Courses**
+* 📂 **Datasets for Practice**
+* 🌐 **Community Resources**
 

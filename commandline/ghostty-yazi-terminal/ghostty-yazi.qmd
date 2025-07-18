@@ -211,4 +211,4 @@ mv dotfiles/.config/yazi -P ~/.config/yazi/
 ```
 
 
-
+![Useful Yazi Keybindings](cheatsheet/yazi.pdf){width=100%}

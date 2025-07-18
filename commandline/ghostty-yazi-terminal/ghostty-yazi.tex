@@ -248,7 +248,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{f8f8f8}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, enhanced, breakable, frame hidden, colback={codebgcolor}, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, colback={codebgcolor}, sharp corners, borderline west={3pt}{0pt}{shadecolor}, breakable, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 
 \ifLuaTeX
@@ -471,9 +471,15 @@ yazi}\label{add-configuration-file-and-keymap-for-yazi}
 \end{Highlighting}
 \end{Shaded}
 
-\clearpage
+\begin{figure}[H]
 
-\section{References}\label{references}
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{cheatsheet/yazi.pdf}
+
+}
+
+\caption{Useful Yazi Keybindings}
+
+\end{figure}%
 
 
 

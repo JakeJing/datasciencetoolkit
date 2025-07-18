@@ -23,7 +23,7 @@ format:
   html:
     math: mathjax # or katex
     # theme: materia
-    # fig-fold: false
+    fig-fold: false
     css: 
       - ./css/shadenote.css
       - ./css/style.css
