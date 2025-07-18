@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Data Science Toolkits"
+  description: "Comprehensive guides and tools for data science"
+  navbar:
+    left:
+      - href: programming/coverpage.qmd
+        text: Programming
+      - href: commandline/coverpage.qmd
+        text: Command Line
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: https://jakejing.github.io/datasciencetoolkits/
+  sidebar:
+    style: "floating"
+    search: true
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    code-copy: true
+    code-fold: true

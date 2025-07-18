@@ -1,0 +1,217 @@
+---
+title: "Transform Your Terminal with Ghostty and Yazi"
+author: "Jake Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: true
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    css: 
+      - ./css/shadenote.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+# Introduction
+
+Why I Switched from Kitty and Vifm to Ghostty and Yazi? After years of experimenting with different terminal emulators and file managers, I've finally found my favorite combination: Ghostty and Yazi. These have recently gained a lot of popularity in the community. Briefly put, [Ghostty](https://github.com/ghostty-org/ghostty) is a modern terminal emulator that is fast, feature-rich, and native. [Yazi](https://github.com/sxyazi/yazi) is a blazing-fast terminal file manager. Together, they have transformed my daily workflow. In this blog, I'll show you how to set them up on your own computer, so you can supercharge your terminal experience just like I did.
+
+Note: here I assume the default fish shell is used. You can install it in [this blog](https://medium.com/p/6f9610276c33). 
+
+# Install Ghostty
+
+## brew install ghostty
+
+```bash
+brew install --cask ghostty
+```
+
+## set ghostty as default terminal emulator on mac
+
+- (1) Install the "RCDefaultApp.prefPane" plugin 
+
+This plugin is used to set the default app for opening terminal in your system.
+
+```bash
+git clone https://github.com/JakeJing/fishconfig.git
+sudo mv fishconfig/kitty/RCDefaultApp.prefPane /Library/PreferencePanes/
+```
+
+- (2) Set ghostty as the "default app" for opening terminal
+
+Go to system preferences -> default Apps -> click the "default Apps" -> URLS -> x-man-page -> set the default application as "ghostty".
+
+![Set ghostty as default app for opening terminal](./images/ghostty-default.png)
+
+- (3) Add keyboard shortcut (shift-cmd-1) to open a new Ghostty window here
+
+You can set a keyboard shortcut to open Ghostty here. However, the default option only works when your cursor is on a folder. To enable it when your cursor is on a file, you can create a new service using the Automator application. To do this, go to Automator -> Quick Action, and follow the steps in the image below.
+
+![Automator Quick Action](./images/automator-quick-action.png)
+
+After that, you can go to System Preferences -> Keyboard -> Shortcuts -> Services -> open-ghostty-here to add it (shift-cmd-1).
+
+
+{{< gist JakeJing cea5f0ebbd29d01f57d82bde3cf2205d >}}
+
+
+![Add keyboard shortcut to open Ghostty here](./images/ghostty-window-here.png)
+
+This will automatically open a new Ghostty window here when you press shift-cmd-1. If there is an ongoing Ghostty window, it will open a new tab instead. So far there is no easy way to always open a new window (rather than a new tab or a new process) on mac, as far as I know.
+
+```bash
+# check the services
+ls ~/Library/Services/
+```
+
+- (4) add configuration file for ghostty
+
+```bash
+wget https://raw.githubusercontent.com/JakeJing/dotfiles/refs/heads/main/.config/ghostty/config -P ~/.config/ghostty/
+```
+
+# Install Yazi
+
+## brew install yazi and its dependencies
+
+```bash
+brew update
+brew install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick font-symbols-only-nerd-font
+```
+
+## set alias in fish config 
+
+```bash
+# yazi
+alias yz yazi
+alias y yazi
+alias a yazi
+```
+
+## add configuration file and keymap for yazi
+
+```bash
+# clone my dotfiles
+git clone https://github.com/JakeJing/dotfiles.git
+# move yazi config
+mv dotfiles/.config/yazi -P ~/.config/yazi/
+```
+
+
+
+\clearpage
+
+# References

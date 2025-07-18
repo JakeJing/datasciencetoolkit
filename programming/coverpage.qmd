@@ -1,0 +1,7 @@
+---
+title: "Programming"
+---
+
+- **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** - A simple example to illustrate how Jacobian adjustment works in Stan
+
+

@@ -1,0 +1,30 @@
+---
+title: "Welcome to Data Science Toolkits"
+subtitle: "This website provides comprehensive guides, tutorials, and resources for data science practitioners at all levels."
+---
+
+
+## What You'll Find Here
+
+### 🧰 [Toolkits](toolkits.qmd)
+Curated collections of tools for specific data science tasks:
+- **Python Data Stack**: NumPy, Pandas, Scikit-learn, and more
+- **R Ecosystem**: Tidyverse, Caret, and statistical packages
+- **Machine Learning**: TensorFlow, PyTorch, XGBoost
+- **Data Visualization**: Matplotlib, Plotly, ggplot2
+- **Big Data**: Spark, Dask, Hadoop ecosystem
+
+### 📚 [Tutorials](tutorials.qmd)
+Step-by-step guides and hands-on examples:
+- Data cleaning and preprocessing
+- Exploratory data analysis
+- Model building and evaluation
+- Deployment strategies
+
+### 📖 [Resources](resources.qmd)
+Additional learning materials:
+- Recommended books and courses
+- Datasets for practice
+- Community resources
+- Industry best practices
+

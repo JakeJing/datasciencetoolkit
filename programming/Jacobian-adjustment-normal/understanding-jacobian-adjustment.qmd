@@ -1,0 +1,372 @@
+---
+title: "Understanding Jacobian Adjustments for Constrained Parameters in Stan"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: true
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    css: 
+      - ./css/shadenote.css
+      - ./css/style.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+# Normal distribution
+
+
+```{r}
+#| echo: FALSE
+#| fig-width: 14
+#| fig-height: 6
+#| fig-cap: "Probability masses of normal and lognormal distributions within the corresponding intervals"
+options(vsc.dev.args = list(width = 14, height = 6, units ='in', res = 300))
+# Set parameters
+norm_mu <- 0
+norm_sd <- 1
+lower <- -1
+upper <- 1
+
+# Calculate normal distribution probability
+# cat("--- Normal Distribution ---\n")
+plt_normal <- plot_normal_prob(
+  mu = norm_mu,
+  sigma = norm_sd,
+  a = lower,
+  b = upper
+)
+# cat("Normal interval: [", round(lower, 6), ",", round(upper, 6), "]\n")
+
+# Calculate lognormal distribution probability
+# Key insight: Use the SAME parameters (mu, sigma) but transform the interval bounds
+lognormal_lower <- exp(lower) # exp(-2) ≈ 0.1353
+lognormal_upper <- exp(upper) # exp(2) ≈ 7.3891
+
+# cat("--- Lognormal Distribution ---\n")
+# cat("Transformed interval: [", round(lognormal_lower, 6), ",", round(lognormal_upper, 6), "]\n")
+plt_lognormal <- plot_lognormal_prob(
+  mu = norm_mu, # Same mu parameter
+  sigma = norm_sd, # Same sigma parameter
+  a = lognormal_lower,
+  b = lognormal_upper
+)
+
+ggarrange(plt_normal, plt_lognormal,
+  ncol = 2, nrow = 1
+)
+```
+
+The Jacobian adjustment is a key concept in statistical modeling that arises when transforming probability distributions from one space to another. The intuition is that when you change a random variable, you're not just changing the values - you're also changing how "stretched" or "compressed" the probability density becomes at different points. To account for the distortion caused by the transform, the density must be multiplied by a Jacobian adjustment. This ensures that probability masses of corresponding intervals stay unchanged before and after the transform. This is illustrated by the figure above, which compares the probability density functions of a standard normal distribution and its transformed lognormal distribution. Although the shapes of the two distributions differ, the transformation must preserve the probability mass over corresponding intervals.
+
+In Bayesian inference, Jacobian adjustments are especially important when transforming parameters from a constrained space (e.g., the positive real line) to an unconstrained space (e.g., the entire real line), which is commonly done to improve sampling efficiency and numerical stability. In Stan, such transformations are typically handled automatically. When you declare a constrained parameter (e.g., <lower=0>), Stan internally transforms it to an unconstrained space and applies the appropriate Jacobian adjustment to maintain the correct posterior density.
+
+However, if you manually transform variables inside the transformed parameters block and assign priors to the transformed variables, you need to explicitly include the Jacobian adjustment to preserve the correct log posterior density (lp__). Failing to do so can lead to biased inference. To illustrate how this works, I'll use a simple example of normal distribution, focusing on how Stan handles transformations of the standard deviation parameter $\sigma$ (i.e., <lower=0>) and how we can include a manual Jacobian adjustment.
+
+## Simulate data
+
+I will first simulate some data from a normal distribution with mean 0 and standard deviation 20. A large standard deviation is chosen to make the effect of Jacobian adjustment more pronounced.
+
+```{r}
+data_norm <- list(N = 100, y = rnorm(100, 0, 20))
+```
+
+
+## Posterior parameter estimates
+
+I will include four models to compare posterior parameter estimates and the log posterior density (lp__). The models are:
+
+Model 1: A normal distribution with a proper constraint on $\sigma$
+Model 2: A normal distribution without a constraint on $\sigma$
+Model 3: A normal distribution with an exponential transformation of unconstrained $\sigma_z$ and a Jacobian adjustment
+Model 4: A normal distribution with transformation of $\sigma$ in the transformed parameters block (No Jacobian needed!)
+
+### Model 1: constrained $\sigma$
+
+The first model is a simple normal distribution with a proper constraint on $\sigma$ (<lower=0>). According to [Stan reference manual](https://mc-stan.org/docs/reference-manual/transforms.html), to avoid having to deal with constraints while simulating the Hamiltonian dynamics during sampling, every (multivariate) parameter in a Stan model is transformed to an unconstrained variable behind the scenes by the model compiler, and Stan handles the Jacobian adjustment automatically.
+
+```{.stan include="./Models/normal.stan"}
+```
+
+```{r}
+#| eval: FALSE
+md_norm <- stan_model(file = "./Models/normal.stan")
+fit_norm <- sampling(md_norm, data_norm,
+  iter = 2000, chains = 1
+)
+print(fit_norm, pars = c("mu", "sigma", "lp__"))
+```
+
+
+### Model 2: unconstrained  $\sigma$
+
+
+Now we turn to another model by removing the constraint on $\sigma$. In this case, the parameter $\sigma$ is not a constrained variable, and there is no Jacobian adjustment handled by Stan. This means that the log posterior density (lp__) is biased.
+
+```{.stan include="./Models/normal_no_constraint.stan"}
+```
+
+```{r}
+#| eval: FALSE
+md_norm_no_constraint <- stan_model(file = "./Models/normal_no_constraint_sigma.stan")
+fit_norm_no_constraint <- sampling(md_norm_no_constraint, data_norm,
+  iter = 2000, chains = 1
+)
+print(fit_norm_no_constraint, pars = c("mu", "sigma", "lp__"))
+```
+
+
+### Model 3: exponential transformation of unconstrained $\sigma_z$ and Jacobian adjustment
+
+As a comparison, we can also reformulate the model by defining the parameter $\sigma_z$ as an unconstrained variable, and we then transform it via an exponential function (positive real line). The transformed variable $\sigma$ will be assigned with a prior and used in the model. This is exactly what has happened internally by Stan when you define a parameter with a proper constraint (e.g., <lower=0> for $\sigma$). Stan handles the transformation from an unconstrained internal representation to this constrained user-facing value. Since $\sigma$ is transformed from $\sigma_z$, we need to include a Jacobian adjustment to preserve the correct log posterior density (lp__).
+
+```{=latex}
+\begin{note}
+Let me explain how the Jacobian adjustment works step by step.
+
+Let:
+$$
+y = \sigma_e, \quad x = \sigma, \quad y = \exp(x)
+$$
+
+We are transforming from an unconstrained variable $ x \in \mathbb{R} $ to a positive variable $ y \in (0, \infty) $.
+
+Next, we can compute the derivative:
+$$
+\frac{dy}{dx} = \frac{d}{dx} \exp(x) = \exp(x) = y
+$$
+
+We apply the change-of-variables formula for densities:
+$$
+\left|f_Y(y) \cdot dy\right| = \left|f_X(x) \cdot dx\right| 
+\quad \Rightarrow \quad 
+f_Y(y) \cdot \left| \frac{dy}{dx} \right| = f_X(x)
+$$
+
+Substituting $ \frac{dy}{dx} = y $, we get:
+$$
+f_Y(y) \cdot y = f_X(x)
+$$
+
+Taking logs to get log-densities:
+$$
+\log f_X(x) = \log f_Y(y) + \log y
+$$
+
+This extra term $ \log y $ is the \textbf{Jacobian adjustment}.
+
+In Stan notation, we get:
+
+$$
+\text{target} ~ \text{+=} ~ \text{normal\_lpdf}(\mu, \exp(\sigma_e)) + \log(\sigma_e)
+$$
+\end{note}
+```
+
+```{.stan include="./Models/normal_exp_sigma_jacobian.stan"}
+```
+
+```{r}
+#| eval: FALSE
+md_norm_exp_jacobian <- stan_model(file = "./Models/normal_exp_sigma_jacobian.stan")
+fit_norm_exp_jacobian <- sampling(md_norm_exp_jacobian, data_norm,
+  iter = 2000, chains = 1
+)
+print(fit_norm_exp_jacobian, pars = c("mu", "lp__"))
+print(fit_norm_exp_jacobian, pars = c("mu", "sigma", "lp__"))
+```
+
+
+### Model 4: transformation of $\sigma$ in the transformed parameters block (No Jacobian needed!)
+
+It is also worth mentioning that if you transform the parameter $\sigma$ in the transformed parameters block without assigning a prior to the transformed parameter, you do not need to include a Jacobian adjustment. This is because the transformation is applied to the parameter after sampling. This is conceptually similar to generating quantities from posterior draws.
+
+As a general rule, if you place priors on the declared parameters or directly use the parameters inside parameters block (in most cases), rather than on transformed parameters, no Jacobian adjustment is needed—this is a simple variable transformation. By contrast, if you transform a parameter and place a prior on the transformed variable, you need to include a Jacobian adjustment.
+
+
+```{.stan include="./Models/normal_transform_parameters.stan"}
+```
+
+```{r}
+#| eval: FALSE
+md_norm_transform_parameters <- stan_model(file = "./Models/normal_transform_parameters.stan")
+fit_norm_transform_parameters <- sampling(md_norm_transform_parameters, data_norm,
+  iter = 2000, chains = 1
+)
+print(fit_norm_transform_parameters, pars = c("mu", "sigma", "lp__"))
+```
+
+
+### Model 5: log transformation of $\sigma$ in the model block as a local variable (prior density changed, not related to Jacobian adjustment)
+
+You may think of it in a different way by transforming the parameter $\sigma$ via logrithm transformation. This is not what happened under the hood in stan, since Jacobian adjustment is performed on the absolute derivative of the inverse transform. See the [stan reference manual](https://mc-stan.org/docs/reference-manual/transforms.html) for more details. 
+
+
+
+```{=latex}
+\begin{note}
+\textbf{Univariate changes of variables}
+Suppose $X$ is one dimensional and $f : \mathrm{supp}(X) \to \mathbb{R}$ is a one-to-one, monotonic function with a differentiable inverse $f^{-1}$. Then the density of $Y$ is given by
+
+$$
+p_Y(y) = p_X(f^{-1}(y)) \left| \frac{d}{dy} f^{-1}(y) \right|
+$$
+
+The absolute derivative of the inverse transform measures how the scale of the transformed variable changes with respect to the underlying variable.
+\end{note}
+```
+
+If you change in this way, you will change the prior on $\sigma$. You will not get the same log posterior density (lp__) as Model 1, since the prior on $\sigma$ is different.
+
+In model 1: $\sigma \sim \mathcal{N}(0, 5)$
+
+In model 5: $\log(\sigma) \sim \mathcal{N}(0, 5)$ or $\sigma \sim \mathcal{LogN}(0, 5)$
+
+
+My own opinion is that it is not recommended to transform the parameter locally inside the model block, since (1) it is not that transparent unless you really know what you are doing and (2) it will not be saved in the output.
+
+```{.stan include="./Models/normal_transform_local.stan"}
+```
+
+```{r}
+#| eval: FALSE
+md_norm_transform_local <- stan_model(file = "./Models/normal_transform_local.stan")
+fit_norm_transform_local <- sampling(md_norm_transform_local, data_norm,
+  iter = 2000, chains = 1
+)
+print(fit_norm_transform_local, pars = c("mu", "sigma", "lp__"))
+```
+
+
+### Comparison of Results
+
+As we can see, the posterior parameter estimates for $\mu$ and $\sigma$ are similar across all three models. However, the log posterior density (lp__) differs between Model 1 and Model 2. This is because Model 1 includes the proper constraint on $\sigma$, while Model 2 does not. The log posterior density in Model 2 is biased due to the missing Jacobian adjustment. Model 3 addresses this issue by including a Jacobian adjustment. In general, if you are interested in parameter inference, it may be not a major concern in this case, but missing Jacobian adjustments can cause serious problems for model comparison (e.g., WAIC, LOO, and Bayes factors).
+
+Note that this example is only for illustration and help you understand the concept of Jacobian adjustment and how Stan handles changes of variables. In practice, you should always use the proper constraint on the parameter and let Stan handle the Jacobian adjustment automatically, which is both more efficient and more reliable.
+
+
+Related links
+
+- [(Best) A coin toss example with Jacobian transformation](https://rpubs.com/kaz_yos/stan_jacobian)
+- [The Jacobian transformation](https://modelassist.epixanalytics.com/space/EA/26575402/The+Jacobian+transformation)
+- [Changes of variables](https://mc-stan.org/docs/stan-users-guide/reparameterization.html#changes-of-variables)
+- [Transforms](https://mc-stan.org/docs/reference-manual/transforms.html)
+- [Laplace method and Jacobian of parameter transformation](https://users.aalto.fi/~ave/casestudies/Jacobian/jacobian.html)
+
+
+\clearpage
+
+# References
