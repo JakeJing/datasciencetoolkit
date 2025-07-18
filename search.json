@@ -74,7 +74,7 @@
     "href": "commandline/ghostty-yazi-terminal/ghostty-yazi.html#add-configuration-file-and-keymap-for-yazi",
     "title": "Transform Your Terminal with Ghostty and Yazi",
     "section": "3.3 add configuration file and keymap for yazi",
-    "text": "3.3 add configuration file and keymap for yazi\n# clone my dotfiles\ngit clone https://github.com/JakeJing/dotfiles.git\n# move yazi config\nmv dotfiles/.config/yazi -P ~/.config/yazi/"
+    "text": "3.3 add configuration file and keymap for yazi\n# clone my dotfiles\ngit clone https://github.com/JakeJing/dotfiles.git\n# move yazi config\nmv dotfiles/.config/yazi -P ~/.config/yazi/\n\n\n\nUseful Yazi Keybindings"
   },
   {
     "objectID": "index.html",
