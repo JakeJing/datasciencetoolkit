@@ -15,7 +15,7 @@ website:
         text: About
     right:
       - icon: github
-        href: https://jakejing.github.io/datasciencetoolkits/
+        href: https://jakejing.github.io/datasciencetoolkit/
   sidebar:
     style: "floating"
     search: true
