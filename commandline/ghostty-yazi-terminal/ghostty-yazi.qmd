@@ -1,6 +1,6 @@
 ---
 title: "Transform Your Terminal with Ghostty and Yazi"
-author: "Jake Jing"
+author: "Yingqi Jing"
 date: last-modified
 date-format: "MMMM D, YYYY"
 # Global table of contents settings
