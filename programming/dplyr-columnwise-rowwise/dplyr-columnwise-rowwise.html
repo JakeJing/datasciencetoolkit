@@ -9,7 +9,7 @@
 <meta name="author" content="Yingqi Jing">
 <meta name="dcterms.date" content="2025-07-20">
 
-<title>Transform Your Terminal with Ghostty and Yazi – Data Science Toolkit</title>
+<title>Column-wise and row-wise operations in dplyr – Data Science Toolkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -185,7 +185,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Transform Your Terminal with Ghostty and Yazi</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Column-wise and row-wise operations in dplyr</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -211,27 +211,18 @@ window.Quarto = {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#install-ghostty" id="toc-install-ghostty" class="nav-link" data-scroll-target="#install-ghostty"><span class="header-section-number">2</span> Install Ghostty</a>
-  <ul>
-  <li><a href="#brew-install-ghostty" id="toc-brew-install-ghostty" class="nav-link" data-scroll-target="#brew-install-ghostty"><span class="header-section-number">2.1</span> brew install ghostty</a></li>
-  <li><a href="#set-ghostty-as-default-terminal-emulator-on-mac" id="toc-set-ghostty-as-default-terminal-emulator-on-mac" class="nav-link" data-scroll-target="#set-ghostty-as-default-terminal-emulator-on-mac"><span class="header-section-number">2.2</span> set ghostty as default terminal emulator on mac</a></li>
-  </ul></li>
-  <li><a href="#install-yazi" id="toc-install-yazi" class="nav-link" data-scroll-target="#install-yazi"><span class="header-section-number">3</span> Install Yazi</a>
-  <ul>
-  <li><a href="#brew-install-yazi-and-its-dependencies" id="toc-brew-install-yazi-and-its-dependencies" class="nav-link" data-scroll-target="#brew-install-yazi-and-its-dependencies"><span class="header-section-number">3.1</span> brew install yazi and its dependencies</a></li>
-  <li><a href="#set-alias-in-fish-config" id="toc-set-alias-in-fish-config" class="nav-link" data-scroll-target="#set-alias-in-fish-config"><span class="header-section-number">3.2</span> set alias in fish config</a></li>
-  <li><a href="#add-configuration-file-and-keymap-for-yazi" id="toc-add-configuration-file-and-keymap-for-yazi" class="nav-link" data-scroll-target="#add-configuration-file-and-keymap-for-yazi"><span class="header-section-number">3.3</span> add configuration file and keymap for yazi</a></li>
-  </ul></li>
+  <li><a href="#column-wise-operation" id="toc-column-wise-operation" class="nav-link active" data-scroll-target="#column-wise-operation"><span class="header-section-number">1</span> Column-wise operation</a></li>
+  <li><a href="#row-wise-operation" id="toc-row-wise-operation" class="nav-link" data-scroll-target="#row-wise-operation"><span class="header-section-number">2</span> Row-wise operation</a></li>
+  <li><a href="#related-links" id="toc-related-links" class="nav-link" data-scroll-target="#related-links"><span class="header-section-number">3</span> Related links:</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ghostty-yazi.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dplyr-columnwise-rowwise.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Transform Your Terminal with Ghostty and Yazi</h1>
+<h1 class="title">Column-wise and row-wise operations in dplyr</h1>
 </div>
 
 
@@ -260,100 +251,226 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>Why I Switched from Kitty and Vifm to Ghostty and Yazi? After years of experimenting with different terminal emulators and file managers, I’ve finally found my favorite combination: Ghostty and Yazi. These have recently gained a lot of popularity in the community. Briefly put, <a href="https://github.com/ghostty-org/ghostty">Ghostty</a> is a modern terminal emulator that is fast, feature-rich, and native. <a href="https://github.com/sxyazi/yazi">Yazi</a> is a blazing-fast terminal file manager. Together, they have transformed my daily workflow. In this blog, I’ll show you how to set them up on your own computer, so you can supercharge your terminal experience just like I did.</p>
-<p>Note: here I assume the default fish shell is used. You can install it in <a href="https://medium.com/p/6f9610276c33">this blog</a>.</p>
-</section>
-<section id="install-ghostty" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Install Ghostty</h1>
-<section id="brew-install-ghostty" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="brew-install-ghostty"><span class="header-section-number">2.1</span> brew install ghostty</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> ghostty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="set-ghostty-as-default-terminal-emulator-on-mac" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="set-ghostty-as-default-terminal-emulator-on-mac"><span class="header-section-number">2.2</span> set ghostty as default terminal emulator on mac</h2>
-<ul>
-<li><ol type="1">
-<li>Install the “RCDefaultApp.prefPane” plugin</li>
-</ol></li>
-</ul>
-<p>This plugin is used to set the default app for opening terminal in your system.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/JakeJing/fishconfig.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv fishconfig/kitty/RCDefaultApp.prefPane /Library/PreferencePanes/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><ol start="2" type="1">
-<li>Set ghostty as the “default app” for opening terminal</li>
-</ol></li>
-</ul>
-<p>Go to system preferences -&gt; default Apps -&gt; click the “default Apps” -&gt; URLS -&gt; x-man-page -&gt; set the default application as “ghostty”.</p>
+<div class="cell">
+<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="./images/ghostty-default.png" class="img-fluid figure-img"></p>
-<figcaption>Set ghostty as default app for opening terminal</figcaption>
+<p><img src="logos/dplyrlogs.png" style="width:70.0%;height:70.0%" class="figure-img"></p>
+<figcaption>row-wise and column-wise operations</figcaption>
 </figure>
 </div>
+</div>
+</div>
+<p>With the development of <strong>dplyr</strong> or its umbrella package <strong>tidyverse</strong>, it becomes quite easy to perform operations over columns or rows in R. These column- or row-wise methods can also be directly integrated with other dplyr verbs like <code>select</code>, <code>mutate</code>, <code>filter</code> and <code>summarise</code>, making them more comparable with other functions in <code>apply</code> or <code>map</code> families. In this blog, I will briefly cover some useful column- or row-wise operations.</p>
+<section id="column-wise-operation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Column-wise operation</h1>
+<p><strong>Example 1:</strong> select those string columns with less than 5 levels in the dataset of <strong>starwars</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(<span class="sc">~</span> <span class="fu">any</span>(<span class="fu">is.character</span>(.x) <span class="sc">&amp;</span> <span class="fu">length</span>(<span class="fu">unique</span>(.x)) <span class="sc">&lt;=</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  sex    gender   
+  &lt;chr&gt;  &lt;chr&gt;    
+1 male   masculine
+2 none   masculine
+3 none   masculine
+4 male   masculine
+5 female feminine 
+6 male   masculine</code></pre>
+</div>
+</div>
+<p>We can combine <code>select_if</code> and <code>any</code> to identify certain columns by certain criterion. <strong>Note:</strong> we are using tilde (~) to define an anonymous function, and thus we should use <code>.x</code> to refer to the selected columns. See this <a href="https://www.youtube.com/watch?v=ynaHKNdAAwk&amp;t=364s">link</a> for detailed illustration of tilde (~), dot (.), and dot x (.x) in dplyr.</p>
+<p>If you want to calculate the levels of those selected columns, you can try <code>across</code> function and <code>summarise</code> the number of levels by column.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span> <span class="fu">length</span>(<span class="fu">unique</span>(.x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+   name hair_color skin_color eye_color   sex gender homeworld species
+  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
+1    87         12         31        15     5      3        49      38</code></pre>
+</div>
+</div>
+<p>Alternatively, you can make use of the <code>map</code> or <code>map_dbl</code> function in <strong>purrr</strong> by the following command. Note that when a <code>map</code> function is applied to a data.frame, it will operate over columns by default.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map_dbl returns a double vector, while map returns a list</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(<span class="sc">~</span> <span class="fu">is.character</span>(.x)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">length</span>(<span class="fu">unique</span>(.x))) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      name hair_color skin_color  eye_color        sex     gender 
+        87         12         31         15          5          3 </code></pre>
+</div>
+</div>
+<p><strong>Example 2:</strong> select those numeric columns and calculate the means and sds across columns in the dataset of <strong>starwars</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(<span class="sc">~</span> <span class="fu">is.numeric</span>(.x)),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Mean =</span> <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Sd =</span> <span class="sc">~</span> <span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  height_Mean height_Sd mass_Mean mass_Sd birth_year_Mean birth_year_Sd
+        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+1        175.      34.8      97.3    169.            87.6          155.</code></pre>
+</div>
+</div>
+<p>This example provides us a good illustration of the use of <code>.x</code> in <strong>dplyr</strong> style syntax, since we have some missing values (NAs) in certain columns. Thus, we need to specify the parameter with <code>na.rm = TRUE</code> inside the functions.</p>
+<p>There is indeed a more convenient and elegant way of solving this by using the function <code>summarise_if</code>. It allows us to select certain columns and operate by columns like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_if</span>(is.numeric,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">Sum =</span> sum, <span class="at">Mean =</span> mean, <span class="at">Sd =</span> sd),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 9
+  height_Sum mass_Sum birth_year_Sum height_Mean mass_Mean birth_year_Mean height_Sd mass_Sd birth_year_Sd
+       &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;
+1      14143    5741.          3765.        175.      97.3            87.6      34.8    169.          155.</code></pre>
+</div>
+</div>
+</section>
+<section id="row-wise-operation" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Row-wise operation</h1>
+<p><strong>Example 3:</strong> calculate the <strong>sums</strong>, <strong>means</strong> and <strong>sds</strong> for each row for the dataset of <strong>iris</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsum =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsd =</span> <span class="fu">sd</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowmean =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Rowsum Rowsd Rowmean
+         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+1          5.1         3.5          1.4         0.2 setosa    10.2  2.18    2.55
+2          4.9         3            1.4         0.2 setosa     9.5  2.04    2.38
+3          4.7         3.2          1.3         0.2 setosa     9.4  2.00    2.35
+4          4.6         3.1          1.5         0.2 setosa     9.4  1.91    2.35
+5          5           3.6          1.4         0.2 setosa    10.2  2.16    2.55
+6          5.4         3.9          1.7         0.4 setosa    11.4  2.23    2.85</code></pre>
+</div>
+</div>
+<p>Here the function <code>c_across</code> is specifically designed to work with <code>rowwise</code> operations. <strong>Note:</strong> <code>rowwise</code> groups your data by row (class: <em>rowwise_df</em>), and it is best to <code>ungroup</code> immediately. Of course, if you are more comfortable with the <code>apply</code> function, you can also use the following command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sepal.Length<span class="sc">:</span>Petal.Width) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="fu">sum</span>(x), <span class="fu">sd</span>(x), <span class="fu">mean</span>(x))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   [,1]     [,2]  [,3]
+V1 10.2 2.179449 2.550
+V2  9.5 2.036950 2.375
+V3  9.4 1.997498 2.350
+V4  9.4 1.912241 2.350
+V5 10.2 2.156386 2.550
+V6 11.4 2.230844 2.850</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsum =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowmean =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsd =</span> <span class="fu">sd</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="st">"Species"</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Rowsum Rowmean Rowsd Species
+         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  
+1          5.1         3.5          1.4         0.2   10.2    2.55  2.18 setosa 
+2          4.9         3            1.4         0.2    9.5    2.38  2.04 setosa 
+3          4.7         3.2          1.3         0.2    9.4    2.35  2.00 setosa 
+4          4.6         3.1          1.5         0.2    9.4    2.35  1.91 setosa 
+5          5           3.6          1.4         0.2   10.2    2.55  2.16 setosa 
+6          5.4         3.9          1.7         0.4   11.4    2.85  2.23 setosa </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> <span class="fu">pmap</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="sc">~</span> {</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(<span class="at">rsum =</span> sum, <span class="at">rmean =</span> mean) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">map_dfc</span>(<span class="cf">function</span>(f) <span class="fu">f</span>(<span class="fu">c</span>(...)))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    }),</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="st">"Sepal.Length"</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(row) <span class="sc">%&gt;%</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+   rsum rmean Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+  &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+1  10.2  2.55          5.1         3.5          1.4         0.2 setosa 
+2   9.5  2.38          4.9         3            1.4         0.2 setosa 
+3   9.4  2.35          4.7         3.2          1.3         0.2 setosa 
+4   9.4  2.35          4.6         3.1          1.5         0.2 setosa 
+5  10.2  2.55          5           3.6          1.4         0.2 setosa 
+6  11.4  2.85          5.4         3.9          1.7         0.4 setosa </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> <span class="fu">pmap</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">across</span>(Sepal.Length<span class="sc">:</span>Petal.Width),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">rsum =</span> <span class="fu">sum</span>(<span class="fu">c</span>(...)),</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">rmean =</span> <span class="fu">mean</span>(<span class="fu">c</span>(...)),</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">rsd =</span> <span class="fu">sd</span>(<span class="fu">c</span>(...))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="st">"Sepal.Length"</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(row) <span class="sc">%&gt;%</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+   rsum rmean   rsd Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+1  10.2  2.55  2.18          5.1         3.5          1.4         0.2 setosa 
+2   9.5  2.38  2.04          4.9         3            1.4         0.2 setosa 
+3   9.4  2.35  2.00          4.7         3.2          1.3         0.2 setosa 
+4   9.4  2.35  1.91          4.6         3.1          1.5         0.2 setosa 
+5  10.2  2.55  2.16          5           3.6          1.4         0.2 setosa 
+6  11.4  2.85  2.23          5.4         3.9          1.7         0.4 setosa </code></pre>
+</div>
+</div>
+<!-- 
+iris %>%
+  reframe(newcol = pmap(
+    across(Sepal.Length:Petal.Width), ~ {
+      list(sum, mean, sd) %>%
+        purrr::map(., function(f) f(c(...)))
+    }
+  )) %>%
+  head()
+-->
+</section>
+<section id="related-links" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Related links:</h1>
 <ul>
-<li><ol start="3" type="1">
-<li>Add keyboard shortcut (shift-cmd-1) to open a new Ghostty window here</li>
-</ol></li>
+<li><a href="https://dplyr.tidyverse.org/articles/rowwise.html">https://dplyr.tidyverse.org/articles/rowwise.html</a></li>
+<li><a href="https://purrr.tidyverse.org/reference/map.html">https://purrr.tidyverse.org/reference/map.html</a></li>
 </ul>
-<p>You can set a keyboard shortcut to open Ghostty here. However, the default option only works when your cursor is on a folder. To enable it when your cursor is on a file, you can create a new service using the Automator application. To do this, go to Automator -&gt; Quick Action, and follow the steps in the image below.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/automator-quick-action.png" class="img-fluid figure-img"></p>
-<figcaption>Automator Quick Action</figcaption>
-</figure>
-</div>
-<p>After that, you can go to System Preferences -&gt; Keyboard -&gt; Shortcuts -&gt; Services -&gt; open-ghostty-here to add it (shift-cmd-1).</p>
-<p><script src="https://gist.github.com/JakeJing/cea5f0ebbd29d01f57d82bde3cf2205d.js"></script></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/ghostty-window-here.png" class="img-fluid figure-img"></p>
-<figcaption>Add keyboard shortcut to open Ghostty here</figcaption>
-</figure>
-</div>
-<p>This will automatically open a new Ghostty window here when you press shift-cmd-1. If there is an ongoing Ghostty window, it will open a new tab instead. So far there is no easy way to always open a new window (rather than a new tab or a new process) on mac, as far as I know.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the services</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/Library/Services/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><ol start="4" type="1">
-<li>add configuration file for ghostty</li>
-</ol></li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://raw.githubusercontent.com/JakeJing/dotfiles/refs/heads/main/.config/ghostty/config <span class="at">-P</span> ~/.config/ghostty/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="install-yazi" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Install Yazi</h1>
-<section id="brew-install-yazi-and-its-dependencies" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="brew-install-yazi-and-its-dependencies"><span class="header-section-number">3.1</span> brew install yazi and its dependencies</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> update</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick font-symbols-only-nerd-font</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="set-alias-in-fish-config" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="set-alias-in-fish-config"><span class="header-section-number">3.2</span> set alias in fish config</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># yazi</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> yz yazi</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> y yazi</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a yazi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="add-configuration-file-and-keymap-for-yazi" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="add-configuration-file-and-keymap-for-yazi"><span class="header-section-number">3.3</span> add configuration file and keymap for yazi</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clone my dotfiles</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/JakeJing/dotfiles.git</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># move yazi config</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> dotfiles/.config/yazi <span class="at">-P</span> ~/.config/yazi/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><embed src="cheatsheet/yazi.pdf" style="width:100.0%" height="620"></p>
-<figcaption>Useful Yazi Keybindings</figcaption>
-</figure>
-</div>
 
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
