@@ -29,15 +29,15 @@ format:
   pdf: # move before if you want to render it as a pdf
     pdf-engine: xelatex
     code-font: "Inconsolata"
-    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+    include-in-header: ../../shadenote/shadenote.tex # only for pdf
   
 # fig-format: pdf # retina, png, jpeg, svg, or pdf
 # fig-cap-location: bottom
 # fig-width: 16
 # fig-height: 8
 code-fold: false
-bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
-csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+#bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+#csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
 link-citations: true
 highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
 execute:
