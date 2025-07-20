@@ -95,77 +95,14 @@
     "href": "commandline/essential-helix-commands/essential-helix.html",
     "title": "Essential Helix Commands",
     "section": "",
-    "text": "Note: In Helix, Alt (or A) functions similarly to Cmd in Vim. Importantly, Helix uses a selection-first model—you must select text before performing most actions."
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#navigation",
-    "href": "commandline/essential-helix-commands/essential-helix.html#navigation",
-    "title": "Essential Helix Commands",
-    "section": "1 Navigation",
-    "text": "1 Navigation\n\nh / j / k / l: Move left, down, up, right\nw / W / e / E / b / B: Word-based motion\ni / a / I / A: Insert modes at various positions\nf / F / t / T: Jump to characters in the current line\ngg: Go to beginning of file\nge: Go to end of file\ngh: Go to beginning of line\ngl: Go to end of line\nu / U: Undo / redo\ngr: Go to reference\ngd: Go to definition"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#deletion-change",
-    "href": "commandline/essential-helix-commands/essential-helix.html#deletion-change",
-    "title": "Essential Helix Commands",
-    "section": "2 Deletion & Change",
-    "text": "2 Deletion & Change\n\nc: Change character or selection\nxd or dd: Delete line (remapped)\n:%d: Delete entire file"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#file-command-access",
-    "href": "commandline/essential-helix-commands/essential-helix.html#file-command-access",
-    "title": "Essential Helix Commands",
-    "section": "3 File & Command Access",
-    "text": "3 File & Command Access\n\n&lt;Space&gt; f: File picker\n&lt;Space&gt; b: Buffer picker (all files in buffer)\n&lt;Space&gt; ?: Command palette\nZZ: Save and close\nZQ: Quit without saving\n:q: Quit"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#window-management",
-    "href": "commandline/essential-helix-commands/essential-helix.html#window-management",
-    "title": "Essential Helix Commands",
-    "section": "4 Window Management",
-    "text": "4 Window Management\n\nCtrl-w v: Split window vertically\nzz: Center the current line on screen"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#selection",
-    "href": "commandline/essential-helix-commands/essential-helix.html#selection",
-    "title": "Essential Helix Commands",
-    "section": "5 Selection",
-    "text": "5 Selection\n\nv 2w: Select the next two words\nx: Expand selection downward\nX: Expand selection upward\n5x: Select current + 4 lines below\n2xv: Combine with jk to resize selection\nmi\": Select inside quotes\nmiw: Select inside word\nmip: Select inside paragraph\n%: Select entire file\n%s&lt;pattern&gt;: Select file and match pattern (regex supported); press Esc then , to exit multiple cursors\n&lt;Space&gt; /: Grep for word in current directory, then Ctrl+v to open matches in vertical split"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#multiple-cursors",
-    "href": "commandline/essential-helix-commands/essential-helix.html#multiple-cursors",
-    "title": "Essential Helix Commands",
-    "section": "6 Multiple Cursors",
-    "text": "6 Multiple Cursors\n\nC: Duplicate cursor to the next match/line\n,: Remove the most recent cursor\nvj C C C: Select 2 lines and press C repeatedly to create multiple cursors every 2 lines\nCtrl+A / Ctrl+E: Move all cursors to start/end of line\nI / A: Enter insert mode across all cursors"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#copy-paste",
-    "href": "commandline/essential-helix-commands/essential-helix.html#copy-paste",
-    "title": "Essential Helix Commands",
-    "section": "7 Copy & Paste",
-    "text": "7 Copy & Paste\n\nx: Select line\np: Paste from register\n&lt;Space&gt; y: Copy selection to global register"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#commands",
-    "href": "commandline/essential-helix-commands/essential-helix.html#commands",
-    "title": "Essential Helix Commands",
-    "section": "8 Commands",
-    "text": "8 Commands\n\n| or Cmd+!: Pipe selection through shell command (e.g., | sort to sort lines)"
-  },
-  {
-    "objectID": "commandline/essential-helix-commands/essential-helix.html#definitions-diagnostics",
-    "href": "commandline/essential-helix-commands/essential-helix.html#definitions-diagnostics",
-    "title": "Essential Helix Commands",
-    "section": "9 Definitions & Diagnostics",
-    "text": "9 Definitions & Diagnostics\n\ngd: Go to definition\nCtrl+o: Go back to previous location\nCtrl+i: Go forward\n&lt;Space&gt; k: Show function help"
+    "text": "Note: In Helix, Alt (or A) functions similarly to Cmd in Vim. Importantly, Helix uses a selection-first model—you must select text before performing most actions.\n\n1 Navigation\n\nh / j / k / l: Move left, down, up, right\nw / W / e / E / b / B: Word-based motion\ni / a / I / A: Insert modes at various positions\nf / F / t / T: Jump to characters in the current line\ngg: Go to beginning of file\nge: Go to end of file\ngh: Go to beginning of line\ngl: Go to end of line\nu / U: Undo / redo\ngr: Go to reference\ngd: Go to definition\n\n\n\n2 Deletion & Change\n\nc: Change character or selection\nxd or dd: Delete line (remapped)\n:%d: Delete entire file\n\n\n\n3 File & Command Access\n\n&lt;Space&gt; f: File picker\n&lt;Space&gt; b: Buffer picker (all files in buffer)\n&lt;Space&gt; ?: Command palette\nZZ: Save and close\nZQ: Quit without saving\n:q: Quit\n\n\n\n4 Window Management\n\nCtrl-w v: Split window vertically\nzz: Center the current line on screen\n\n\n\n5 Selection\n\nv 2w: Select the next two words\nx: Expand selection downward\nX: Expand selection upward\n5x: Select current + 4 lines below\n2xv: Combine with jk to resize selection\nmi\": Select inside quotes\nmiw: Select inside word\nmip: Select inside paragraph\n%: Select entire file\n%s&lt;pattern&gt;: Select file and match pattern (regex supported); press Esc then , to exit multiple cursors\n&lt;Space&gt; /: Grep for word in current directory, then Ctrl+v to open matches in vertical split\n\n\n\n6 Multiple Cursors\n\nC: Duplicate cursor to the next match/line\n,: Remove the most recent cursor\nvj C C C: Select 2 lines and press C repeatedly to create multiple cursors every 2 lines\nCtrl+A / Ctrl+E: Move all cursors to start/end of line\nI / A: Enter insert mode across all cursors\n\n\n\n7 Copy & Paste\n\nx: Select line\np: Paste from register\n&lt;Space&gt; y: Copy selection to global register\n\n\n\n8 Commands\n\n| or Cmd+!: Pipe selection through shell command (e.g., | sort to sort lines)\n\n\n\n9 Definitions & Diagnostics\n\ngd: Go to definition\nCtrl+o: Go back to previous location\nCtrl+i: Go forward\n&lt;Space&gt; k: Show function help"
   },
   {
     "objectID": "commandline/coverpage.html",
     "href": "commandline/coverpage.html",
     "title": "Command Line Tools",
     "section": "",
-    "text": "Transform Your Terminal with Ghostty and Yazi - Ready your terminal emulator and file manager"
+    "text": "Transform Your Terminal with Ghostty and Yazi - Ready your terminal emulator and file manager\nEssential Helix Commands - Useful Helix commands"
   },
   {
     "objectID": "programming/coverpage.html",
