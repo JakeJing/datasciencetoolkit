@@ -26,6 +26,7 @@ format:
     # fig-fold: false
     css: 
       - ./css/shadenote.css
+      - ./css/style.css
   pdf: # move before if you want to render it as a pdf
     pdf-engine: xelatex
     code-font: "Inconsolata"

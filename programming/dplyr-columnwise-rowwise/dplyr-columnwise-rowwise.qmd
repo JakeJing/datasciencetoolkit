@@ -1,0 +1,281 @@
+---
+title: "Column-wise and row-wise operations in dplyr"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: true
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    css: 
+      - ./css/shadenote.css
+      - ./css/style.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+code-fold: false
+bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote # has been integrated in include-code-files
+  - social-embeds # >> quarto install extension sellorm/quarto-social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+# source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+
+```{r}
+#| echo: false
+#| fig.cap: "row-wise and column-wise operations"
+#| out-width: 70%
+#| out-height: 70%
+# ![row-wise and column-wise operations](logos/dplyrlogs.png){width=70% height=70%}
+knitr::include_graphics("logos/dplyrlogs.png")
+```
+
+
+With the development of **dplyr** or its umbrella package **tidyverse**, it becomes quite easy to perform operations over columns or rows in R. These column- or row-wise methods can also be directly integrated with other dplyr verbs like `select`, `mutate`, `filter` and `summarise`, making them more comparable with other functions in `apply` or `map` families. In this blog, I will briefly cover some useful column- or row-wise operations.
+
+# Column-wise operation
+
+**Example 1:** select those string columns with less than 5 levels in the dataset of **starwars**.
+
+```{r}
+starwars %>%
+  select_if(~ any(is.character(.x) & length(unique(.x)) <= 5)) %>% 
+  head()
+```
+
+We can combine `select_if` and `any` to identify certain columns by certain criterion. **Note:** we are using tilde (~) to define an anonymous function, and thus we should use `.x` to refer to the selected columns. See this [link](https://www.youtube.com/watch?v=ynaHKNdAAwk&t=364s) for detailed illustration of tilde (~), dot (.), and dot x (.x) in dplyr.
+
+If you want to calculate the levels of those selected columns, you can try `across` function and `summarise` the number of levels by column.
+
+```{r}
+starwars %>%
+  summarise(across(where(is.character), ~ length(unique(.x))))
+```
+
+Alternatively, you can make use of the `map` or `map_dbl` function in **purrr** by the following command. Note that when a `map` function is applied to a data.frame, it will operate over columns by default.
+
+```{r}
+# map_dbl returns a double vector, while map returns a list
+starwars %>%
+  select_if(~ is.character(.x)) %>%
+  map_dbl(~length(unique(.x))) %>%
+  head()
+```
+
+**Example 2:** select those numeric columns and calculate the means and sds across columns in the dataset of **starwars**.
+
+```{r}
+starwars %>%
+  summarise(across(where(~ is.numeric(.x)),
+                   list(Mean = ~ mean(.x, na.rm = TRUE),
+                        Sd = ~ sd(.x, na.rm = TRUE))))
+```
+
+This example provides us a good illustration of the use of `.x` in **dplyr** style syntax, since we have some missing values (NAs) in certain columns. Thus, we need to specify the parameter with `na.rm = TRUE` inside the functions.
+
+There is indeed a more convenient and elegant way of solving this by using the function `summarise_if`. It allows us to select certain columns and operate by columns like this:
+
+```{r}
+starwars %>%
+  summarise_if(is.numeric,
+               list(Sum = sum, Mean = mean, Sd = sd),
+               na.rm = TRUE)
+```
+
+# Row-wise operation
+
+**Example 3:** calculate the **sums**, **means** and **sds** for each row for the dataset of **iris**.
+
+```{r}
+iris %>%
+  rowwise() %>%
+  mutate(
+    Rowsum = sum(c_across(Sepal.Length:Petal.Width)),
+    Rowsd = sd(c_across(Sepal.Length:Petal.Width)),
+    Rowmean = mean(c_across(Sepal.Length:Petal.Width))
+  ) %>%
+  ungroup() %>%
+  head()
+```
+
+Here the function `c_across` is specifically designed to work with `rowwise` operations. **Note:** `rowwise` groups your data by row (class: *rowwise\_df*), and it is best to `ungroup` immediately. Of course, if you are more comfortable with the `apply` function, you can also use the following command:
+
+```{r}
+iris %>%
+  select(Sepal.Length:Petal.Width) %>%
+  apply(., 1, function(x) c(sum(x), sd(x), mean(x))) %>%
+  as_tibble() %>%
+  t() %>%
+  head()
+```
+
+```{r}
+iris %>%
+  rowwise() %>%
+  dplyr::mutate(
+    Rowsum = sum(c_across(Sepal.Length:Petal.Width)),
+    Rowmean = mean(c_across(Sepal.Length:Petal.Width)),
+    Rowsd = sd(c_across(Sepal.Length:Petal.Width)),
+    .before = "Species"
+  ) %>%
+  ungroup() %>%
+  head()
+```
+
+```{r}
+iris %>%
+  as_tibble() %>%
+  dplyr::mutate(
+    row = pmap(across(1:4), ~ {
+      list(rsum = sum, rmean = mean) %>%
+        map_dfc(function(f) f(c(...)))
+    }),
+    .before = "Sepal.Length"
+  ) %>%
+  unnest(row) %>%
+  head()
+```
+
+```{r}
+iris %>%
+  as_tibble() %>%
+  dplyr::mutate(
+    row = pmap(
+      across(Sepal.Length:Petal.Width),
+      ~ bind_cols(
+        rsum = sum(c(...)),
+        rmean = mean(c(...)),
+        rsd = sd(c(...))
+      )
+    ),
+    .before = "Sepal.Length"
+  ) %>%
+  unnest(row) %>%
+  head()
+```
+
+<!-- 
+iris %>%
+  reframe(newcol = pmap(
+    across(Sepal.Length:Petal.Width), ~ {
+      list(sum, mean, sd) %>%
+        purrr::map(., function(f) f(c(...)))
+    }
+  )) %>%
+  head()
+-->
+
+# Related links:
+
+* [https://dplyr.tidyverse.org/articles/rowwise.html](https://dplyr.tidyverse.org/articles/rowwise.html)
+* [https://purrr.tidyverse.org/reference/map.html](https://purrr.tidyverse.org/reference/map.html)
+

@@ -19,7 +19,9 @@ Step-by-step guides and hands-on examples:
 
 * 🧮 **Ghostty / Kitty**
 * 🗂️ **Yazi / Vifm**
+* **Helix**
 * 📊 **Visidata**
+* **Nvim**
 
 
 ### 📚 [Resources](resources.qmd)

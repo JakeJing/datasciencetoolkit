@@ -248,7 +248,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{f8f8f8}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, breakable, frame hidden, borderline west={3pt}{0pt}{shadecolor}, colback={codebgcolor}, boxrule=0pt, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, boxrule=0pt, frame hidden, borderline west={3pt}{0pt}{shadecolor}, colback={codebgcolor}, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 \makeatother
 
 \ifLuaTeX
@@ -358,6 +358,9 @@ Or in \textbf{yazi} or \textbf{vifm}, navigate to the file and run:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# yazi}
+\ExtensionTok{fish} \AttributeTok{{-}c} \StringTok{"vd {-}{-}csv{-}delimiter \textquotesingle{};\textquotesingle{}; }\VariableTok{$0}\StringTok{"}
+\CommentTok{\# vifm}
 \BuiltInTok{:}\NormalTok{!vd }\AttributeTok{{-}{-}csv{-}delimiter} \StringTok{";"}\NormalTok{ \%f}
 \end{Highlighting}
 \end{Shaded}
@@ -452,12 +455,16 @@ Rows}\label{selecting-and-deselecting-rows}
   longer than 3 chars)
 \item
   From frequency table:
-\item
-  Select rows (\texttt{s}), press \texttt{g+Enter} to go back
-\item
-  Use \texttt{"} to copy
-\item
-  Alternative: \texttt{Shift+F} → select rows → \texttt{q} to go back
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Select rows (\texttt{s}), press \texttt{g+Enter} to go back
+  \item
+    Use \texttt{"} to copy
+  \item
+    Alternative: \texttt{Shift+F} → select rows → \texttt{q} to go back
+  \end{itemize}
 \end{itemize}
 
 \subsection{Filtering}\label{filtering}
