@@ -131,8 +131,7 @@ source("~/git/conflict_prefer/conflict_prefer.R")
 
 **Note:** In Helix, `Alt` (or `A`) functions similarly to `Cmd` in Vim. Importantly, Helix uses a *selection-first* model—you must select text before performing most actions.
 
-
-## **Navigation**
+# Navigation
 
 * `h` / `j` / `k` / `l`: Move left, down, up, right
 * `w` / `W` / `e` / `E` / `b` / `B`: Word-based motion
@@ -147,15 +146,14 @@ source("~/git/conflict_prefer/conflict_prefer.R")
 * `gd`: Go to definition
 
 
-## **Deletion & Change**
+# Deletion & Change
 
 * `c`: Change character or selection
 * `xd` or `dd`: Delete line (remapped)
 * `:%d`: Delete entire file
 
 
-## **File & Command Access**
-
+# File & Command Access
 
 * `<Space> f`: File picker
 * `<Space> b`: Buffer picker (all files in buffer)
@@ -166,13 +164,13 @@ source("~/git/conflict_prefer/conflict_prefer.R")
 
 
 
-## **Window Management**
+# Window Management
 
 * `Ctrl-w v`: Split window vertically
 * `zz`: Center the current line on screen
 
 
-## **Selection**
+# Selection
 
 * `v 2w`: Select the next two words
 * `x`: Expand selection downward
@@ -187,7 +185,7 @@ source("~/git/conflict_prefer/conflict_prefer.R")
 * `<Space> /`: Grep for word in current directory, then `Ctrl+v` to open matches in vertical split
 
 
-## **Multiple Cursors**
+# Multiple Cursors
 
 * `C`: Duplicate cursor to the next match/line
 * `,`: Remove the most recent cursor
@@ -196,18 +194,18 @@ source("~/git/conflict_prefer/conflict_prefer.R")
 * `I` / `A`: Enter insert mode across all cursors
 
 
-## **Copy & Paste**
+# Copy & Paste
 
 * `x`: Select line
 * `p`: Paste from register
 * `<Space> y`: Copy selection to global register
 
-## **Commands**
+# Commands
 
 * `|` or `Cmd+!`: Pipe selection through shell command (e.g., `| sort` to sort lines)
 
 
-## **Definitions & Diagnostics**
+# Definitions & Diagnostics
 
 * `gd`: Go to definition
 * `Ctrl+o`: Go back to previous location

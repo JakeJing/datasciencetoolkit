@@ -210,7 +210,7 @@
 \@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{f8f8f8}}{}
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, boxrule=0pt, frame hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, colback={codebgcolor}, frame hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 
 \ifLuaTeX
@@ -221,7 +221,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Essential Helix Editor Commands},
+  pdftitle={Essential Helix Commands},
   pdfauthor={Yingqi Jing},
   colorlinks=true,
   linkcolor={blue},
@@ -231,7 +231,7 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Essential Helix Editor Commands}
+\title{Essential Helix Commands}
 \author{Yingqi Jing}
 \date{July 20, 2025}
 
@@ -254,7 +254,7 @@ similarly to \texttt{Cmd} in Vim. Importantly, Helix uses a
 \emph{selection-first} model---you must select text before performing
 most actions.
 
-\subsection{\texorpdfstring{\textbf{Navigation}}{Navigation}}\label{navigation}
+\section{Navigation}\label{navigation}
 
 \begin{itemize}
 \tightlist
@@ -286,36 +286,38 @@ most actions.
   \texttt{gd}: Go to definition
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Deletion \&
-Change}}{Deletion \& Change}}\label{deletion-change}
+\section{Deletion \& Change}\label{deletion-change}
 
 \begin{itemize}
 \tightlist
 \item
   \texttt{c}: Change character or selection
 \item
-  \texttt{dd}: Delete line (remapped)
+  \texttt{xd} or \texttt{dd}: Delete line (remapped)
+\item
+  \texttt{:\%d}: Delete entire file
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{File \& Command
-Access}}{File \& Command Access}}\label{file-command-access}
+\section{File \& Command Access}\label{file-command-access}
 
 \begin{itemize}
 \tightlist
 \item
   \texttt{\textless{}Space\textgreater{}\ f}: File picker
 \item
-  \texttt{\textless{}Space\textgreater{}\ b}: Buffer picker
+  \texttt{\textless{}Space\textgreater{}\ b}: Buffer picker (all files
+  in buffer)
 \item
   \texttt{\textless{}Space\textgreater{}\ ?}: Command palette
 \item
   \texttt{ZZ}: Save and close
 \item
   \texttt{ZQ}: Quit without saving
+\item
+  \texttt{:q}: Quit
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Window
-Management}}{Window Management}}\label{window-management}
+\section{Window Management}\label{window-management}
 
 \begin{itemize}
 \tightlist
@@ -325,7 +327,7 @@ Management}}{Window Management}}\label{window-management}
   \texttt{zz}: Center the current line on screen
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Selection}}{Selection}}\label{selection}
+\section{Selection}\label{selection}
 
 \begin{itemize}
 \tightlist
@@ -356,8 +358,7 @@ Management}}{Window Management}}\label{window-management}
   directory, then \texttt{Ctrl+v} to open matches in vertical split
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Multiple
-Cursors}}{Multiple Cursors}}\label{multiple-cursors}
+\section{Multiple Cursors}\label{multiple-cursors}
 
 \begin{itemize}
 \tightlist
@@ -375,8 +376,7 @@ Cursors}}{Multiple Cursors}}\label{multiple-cursors}
   \texttt{I} / \texttt{A}: Enter insert mode across all cursors
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Copy \&
-Paste}}{Copy \& Paste}}\label{copy-paste}
+\section{Copy \& Paste}\label{copy-paste}
 
 \begin{itemize}
 \tightlist
@@ -384,9 +384,12 @@ Paste}}{Copy \& Paste}}\label{copy-paste}
   \texttt{x}: Select line
 \item
   \texttt{p}: Paste from register
+\item
+  \texttt{\textless{}Space\textgreater{}\ y}: Copy selection to global
+  register
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Commands}}{Commands}}\label{commands}
+\section{Commands}\label{commands}
 
 \begin{itemize}
 \tightlist
@@ -395,8 +398,7 @@ Paste}}{Copy \& Paste}}\label{copy-paste}
   command (e.g., \texttt{\textbar{}\ sort} to sort lines)
 \end{itemize}
 
-\subsection{\texorpdfstring{\textbf{Definitions \&
-Diagnostics}}{Definitions \& Diagnostics}}\label{definitions-diagnostics}
+\section{Definitions \& Diagnostics}\label{definitions-diagnostics}
 
 \begin{itemize}
 \tightlist
