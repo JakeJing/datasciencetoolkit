@@ -110,5 +110,271 @@
     "title": "Programming",
     "section": "",
     "text": "Understanding Jacobian Adjustments for Constrained Parameters in Stan - A simple example to illustrate how Jacobian adjustment works in Stan"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "",
+    "text": "pip3 install visidata\nvd --version"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#adjusting-columns",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#adjusting-columns",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.1 Adjusting Columns",
+    "text": "5.1 Adjusting Columns\n\nHide a column: -\nShow all hidden columns: gv\nAuto-adjust column width: _"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#adding-columns-and-rows",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#adding-columns-and-rows",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.2 Adding Columns and Rows",
+    "text": "5.2 Adding Columns and Rows\n\nza: Append a blank column\ni: Insert new column\n^: Rename column\na: Add a new row (not editable in frequency table)\nDelete a column: Shift+C, then d\nEdit a cell: e"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#navigation",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#navigation",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.3 Navigation",
+    "text": "5.3 Navigation\n\nGo to beginning of column: gh\nGo to end of column: gl"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#overview-summary",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#overview-summary",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.4 Overview / Summary",
+    "text": "5.4 Overview / Summary\n\nShift+I: Overview (“bird’s eye view”) of the data"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#selecting-and-deselecting-rows",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#selecting-and-deselecting-rows",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.5 Selecting and Deselecting Rows",
+    "text": "5.5 Selecting and Deselecting Rows\n\n,: Select rows matching the current cell in the current column\ns: Select row\ngs: Select all\nu: Deselect current row\ngu: Deselect all\ngd: Delete all selected rows\nSelect by pattern:\nUse / to search column\nUse g/ to search all columns\nUse regex with \\... to deselect (e.g., rows longer than 3 chars)\nFrom frequency table:\n\nSelect rows (s), press g+Enter to go back\nUse \" to copy\nAlternative: Shift+F → select rows → q to go back"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#filtering",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#filtering",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.6 Filtering",
+    "text": "5.6 Filtering\n\nz|: Filter rows using expressions\nExamples:\n\nOPERATOR == \"BUSINESS\"\nSTATE != \"FL\"\nHeight &gt; 170"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#deleting",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#deleting",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.7 Deleting",
+    "text": "5.7 Deleting\n\nDelete row: d\nDelete column: Shift+C → d\nDelete all selections: gd"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#replace-values",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#replace-values",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.8 Replace Values",
+    "text": "5.8 Replace Values\n\nSelect matching rows with ,\nge: Globally edit selected cells in a column"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#sorting",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#sorting",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.9 Sorting",
+    "text": "5.9 Sorting\n\nSort ascending: [\nSort descending: ]"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#plotting",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#plotting",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.10 Plotting",
+    "text": "5.10 Plotting\n\nSelect x-axis column: !\nSelect y-axis column: !\nOptional: select color column\nEnsure cursor is on y-axis (numeric)\nPlot: .\nAdjust aspect ratio: z_ (plot width / height)\nConvert to numeric: % or #"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#command-prompt",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#command-prompt",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.11 Command Prompt",
+    "text": "5.11 Command Prompt\n\nSpace: Launch command prompt"
+  },
+  {
+    "objectID": "commandline/visidata-commands-tricks/visidata-commands.html#mnemonics",
+    "href": "commandline/visidata-commands-tricks/visidata-commands.html#mnemonics",
+    "title": "VisiData: Commands, Tips, and Tricks",
+    "section": "5.12 Mnemonics",
+    "text": "5.12 Mnemonics\n\ng = “global” or “all”:\n/ = search in column\ng/ = search in all columns\nz = “zoom in” or “narrow”:\ny = copy column\nzy = copy cell"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "",
+    "text": "Clone the dotfiles and copy the Neovim config into your ~/.config directory:\n\ngit clone https://github.com/JakeJing/dotfiles.git\nmv dotfiles/.config/nvim -P ~/.config/\n\nOpen plugins.lua and type :w to launch the auto-installation.\nUse :checkhealth to verify that all dependencies are properly set up."
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#installation",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#installation",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "",
+    "text": "Clone the dotfiles and copy the Neovim config into your ~/.config directory:\n\ngit clone https://github.com/JakeJing/dotfiles.git\nmv dotfiles/.config/nvim -P ~/.config/\n\nOpen plugins.lua and type :w to launch the auto-installation.\nUse :checkhealth to verify that all dependencies are properly set up."
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#navigation-movements",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#navigation-movements",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "2 Navigation & Movements",
+    "text": "2 Navigation & Movements\n\nhjkl: move left, down, up, right\nCtrl+d/u: scroll down/up one page\nCtrl+n/p: next/previous file in window\ni/I: insert before cursor / at line start\na/A: append after cursor / at line end\n0 / ^: go to line start\n$: go to line end\no/O: new line below/above\n%: jump between matching brackets\nb/e/w: word navigation (back, end, next)\nf{x} / F{x}: move to char {x} forward/back\nt{x} / T{x}: move before char {x} forward/back\n'' or g:: go back to previous position\no (in visual mode): toggle selection endpoint"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#bookmarks-with-telescope",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#bookmarks-with-telescope",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "3 Bookmarks (with Telescope)",
+    "text": "3 Bookmarks (with Telescope)\n\nmm: toggle bookmark\nShift+n: next bookmark\nShift+b: previous bookmark\nma: view all bookmarks\n:Telescope vim_bookmarks all: list all bookmarks\n:Telescope vim_bookmarks current_file: list for current file"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#deleting-text",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#deleting-text",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "4 Deleting Text",
+    "text": "4 Deleting Text\n\ndd: delete line\n3dd: delete 3 lines\nD or d$: delete to line end\nd0: delete to line start\nx: delete character under cursor\ndw, diw, daw: delete word (various scopes)\ndip: delete paragraph\ndi\": delete inside quotes\n:%d: delete entire file content\nci\" / ci(: delete and insert inside quotes/brackets"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#joining-lines",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#joining-lines",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "5 Joining Lines",
+    "text": "5 Joining Lines\n\nJ: join lines with space\ngJ: join lines without space"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#increment-numbers",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#increment-numbers",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "6 Increment Numbers",
+    "text": "6 Increment Numbers\n\nSelect numbers with Ctrl+v, then g Ctrl+a to increment"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#word-count",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#word-count",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "7 Word Count",
+    "text": "7 Word Count\n\n:WordCount: custom word count (requires user-defined function)\n&lt;leader&gt;wc: shortcut for word count"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#selection-visual-mode",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#selection-visual-mode",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "8 Selection (Visual Mode)",
+    "text": "8 Selection (Visual Mode)\n\nv, V, Ctrl+v: character, line, and block selection\nviw, vaw: inside/around word\nvi{: inside block (like function)\nf{char} in visual mode: fast selection"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#multi-line-insert-append",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#multi-line-insert-append",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "9 Multi-line Insert & Append",
+    "text": "9 Multi-line Insert & Append\n\nNote: Only works in visual block mode (Ctrl+v).\n\n\nInsert start: Ctrl+v, select, Shift+i, type, then Esc\nAppend end: Ctrl+v, select, Shift+a, type, then Esc\nChange text: select block, press c, type, then Esc"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#editing-text",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#editing-text",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "10 Editing Text",
+    "text": "10 Editing Text\n\nci(: change inside parentheses\ncip: change inside paragraph\ncw: change word"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#yank-paste",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#yank-paste",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "11 Yank & Paste",
+    "text": "11 Yank & Paste\n\nyy, yiw, ya(, y2w: yank lines, words, brackets\nUse neoclip for yank history:\n\n&lt;C-c&gt; to yank\n&lt;C-p&gt; to paste from history"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#substitution",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#substitution",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "12 Substitution",
+    "text": "12 Substitution\n\nS: start substitution (:%s//g via remap)\ncgn: change next match, repeat with .\nRegex substitution:\n:%s/[-.+/a-zA-Z0-9\"$]*\\ze:/`\\0`/g\nR: overwrite text\n:'&lt;,'&gt;s/old/new/g: substitute in selection\n:cdo s/old/new/g: substitute across quickfix list"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#repeating-undoing",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#repeating-undoing",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "13 Repeating & Undoing",
+    "text": "13 Repeating & Undoing\n\n.: repeat last change\nu / U: undo / undo line\nCtrl+r: redo\nCtrl+s: open terminal in vertical split\n:vs | :term: open vertical terminal"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#quit-save",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#quit-save",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "14 Quit & Save",
+    "text": "14 Quit & Save\n\nZZ: save and quit\nZQ: quit without saving"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#key-mapping-help",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#key-mapping-help",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "15 Key Mapping & Help",
+    "text": "15 Key Mapping & Help\n\n15.1 Special Keys\n&lt;Tab&gt;, &lt;CR&gt;, &lt;Esc&gt;, &lt;Space&gt;, &lt;A-j&gt;, &lt;C-s&gt;, &lt;Up&gt;, &lt;F1&gt;...&lt;F12&gt;, etc.\n\n\n15.2 Check Mappings\n:imap &lt;A-j&gt;\n:verbose imap &lt;Tab&gt;\n\n\n15.3 Help\n\n:h {key} or :help ctrl-w_&lt;\n:h telescope.command, :h regex\nfh or &lt;leader&gt;fh: floating help"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#terminal-tricks",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#terminal-tricks",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "16 Terminal Tricks",
+    "text": "16 Terminal Tricks\n\nCtrl+s: toggle floating terminal\n:r !ls: insert output of shell command"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#termvifm-zoxide",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#termvifm-zoxide",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "17 TermVifm + Zoxide",
+    "text": "17 TermVifm + Zoxide\n\nBind vf to launch vifm\nUse zoxide with &lt;leader&gt;Z to jump to dirs\n\nInstall with brew install zoxide\nAdd to config.fish:\nzoxide init fish | source"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#search",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#search",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "18 Search",
+    "text": "18 Search\n\nff: find file\nfa: find all in buffer\nfw: find word\n'Search: exact match\n:set hlsearch / :nohlsearch: toggle highlights"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#buffers",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#buffers",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "19 Buffers",
+    "text": "19 Buffers\n\n:bfirst, :blast, :bnext, :bprevious\n:ls: list buffers\n:bd [num]: close buffer\n:b &lt;TAB&gt;: autocomplete open buffers\nCtrl+^: toggle last buffer"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#window-management",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#window-management",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "20 Window Management",
+    "text": "20 Window Management\n\nCtrl+w w: switch windows\nCtrl+w h/l: left/right\nCtrl+w _: maximize\nCtrl+w =: equalize\nCtrl+w R: reverse splits\nCtrl+w t Ctrl+w K: horizontal → vertical\nCtrl+w t Ctrl+w H: vertical → horizontal\nCtrl+Cmd+F or fn+F: full screen"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#git-with-lazygit",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#git-with-lazygit",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "21 Git with LazyGit",
+    "text": "21 Git with LazyGit\n\nCtrl+g: open LazyGit\nc: commit\nShift+p: push\n?: help\ngl: git logs"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#linting-formatting",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#linting-formatting",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "22 Linting & Formatting",
+    "text": "22 Linting & Formatting\n\n:NullLsInfo: see current null-ls status\n:echo executable(\"eslint\"): check if installed\n:LspStop: stop diagnostics"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#registers-special-characters",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#registers-special-characters",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "23 Registers & Special Characters",
+    "text": "23 Registers & Special Characters\n\"%\": current file\n\"#\": alternate file\n\"*\", \"+\": system clipboard\n\"/\": last search\n\":\": last command\n\"-\": last small delete\n\".\": last insert\n\"=\": expression register"
+  },
+  {
+    "objectID": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#cmdline-modes",
+    "href": "commandline/nvim-cheatsheet/nvim-cheatsheet.html#cmdline-modes",
+    "title": "Neovim Cheat Sheet: Essential Tricks and Shortcuts",
+    "section": "24 Cmdline Modes",
+    "text": "24 Cmdline Modes\n:   Normal command\n&gt;   Debug mode\n/   Forward search\n?   Backward search\n=   Expression\n@   Input()\n-   Insert/append text\n\nq:: show command history"
   }
 ]

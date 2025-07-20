@@ -1,0 +1,273 @@
+---
+title: "VisiData: Commands, Tips, and Tricks"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: true
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    css: 
+      - ./css/shadenote.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+code-fold: false
+bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote # has been integrated in include-code-files
+  - social-embeds # >> quarto install extension sellorm/quarto-social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+# source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+
+# Installation
+
+```bash
+pip3 install visidata
+vd --version
+```
+
+# Help
+
+* `Ctrl+h`: Show help
+* `z+Ctrl+h`: Show all commands
+
+# Supported Filetypes
+
+* CSV and other delimiter-separated formats
+* Excel spreadsheets *(requires `pip3 install xlrd openpyxl`)*
+* Fixed-width files
+* SQLite databases
+* PostgreSQL *(requires `pip3 install psycopg2`)*
+* MySQL *(requires `pip3 install mysqlclient`)*
+* HDF5 *(requires `pip3 install h5py`)*
+* `.sas7bdat` *(requires `pip3 install sas7bdat`)*
+* `.xpt` *(requires `pip3 install xport`)*
+* `.sav` *(requires `pip3 install savReaderWriter`)*
+* `.dta` *(requires `pip3 install pandas`)*
+
+# Opening and Quitting Files
+
+* Open a file: `vd file.csv`
+* Quit: `q` or `gq` (quit all)
+* Specify delimiter:
+
+```bash
+vd --csv-delimiter "|" filename.csv
+```
+
+Or in **yazi** or **vifm**, navigate to the file and run:
+
+```bash
+# yazi
+fish -c "vd --csv-delimiter ';'; $0"
+# vifm
+:!vd --csv-delimiter ";" %f
+```
+
+# Sheets
+
+VisiData opens each file or operation in a new **sheet**.
+
+* `gS`: View all sheets
+* Select sheets (`s`), then join (`&`) them: append, inner, outer, or diff join
+
+## Adjusting Columns
+
+* Hide a column: `-`
+* Show all hidden columns: `gv`
+* Auto-adjust column width: `_`
+
+## Adding Columns and Rows
+
+* `za`: Append a blank column
+* `i`: Insert new column
+* `^`: Rename column
+* `a`: Add a new row (not editable in frequency table)
+* Delete a column: `Shift+C`, then `d`
+* Edit a cell: `e`
+
+## Navigation
+
+* Go to beginning of column: `gh`
+* Go to end of column: `gl`
+
+## Overview / Summary
+
+* `Shift+I`: Overview ("bird's eye view") of the data
+
+## Selecting and Deselecting Rows
+
+* `,`: Select rows matching the current cell in the current column
+* `s`: Select row
+* `gs`: Select all
+* `u`: Deselect current row
+* `gu`: Deselect all
+* `gd`: Delete all selected rows
+* Select by pattern:
+* Use `/` to search column
+* Use `g/` to search all columns
+* Use regex with `\...` to deselect (e.g., rows longer than 3 chars)
+* From frequency table:
+  * Select rows (`s`), press `g+Enter` to go back
+  * Use `"` to copy
+  * Alternative: `Shift+F` → select rows → `q` to go back
+
+## Filtering
+
+* `z|`: Filter rows using expressions
+* Examples:
+  * `OPERATOR == "BUSINESS"`
+  * `STATE != "FL"`
+  * `Height > 170`
+
+## Deleting
+
+* Delete row: `d`
+* Delete column: `Shift+C` → `d`
+* Delete all selections: `gd`
+
+## Replace Values
+
+* Select matching rows with `,`
+* `ge`: Globally edit selected cells in a column
+
+## Sorting
+
+* Sort ascending: `[`
+* Sort descending: `]`
+
+## Plotting
+
+1. Select x-axis column: `!`
+2. Select y-axis column: `!`
+3. Optional: select color column
+4. Ensure cursor is on y-axis (numeric)
+5. Plot: `.`
+6. Adjust aspect ratio: `z_` (plot width / height)
+7. Convert to numeric: `%` or `#`
+
+## Command Prompt
+
+* `Space`: Launch command prompt
+
+## Mnemonics
+
+* `g` = "global" or "all":
+* `/` = search in column
+* `g/` = search in all columns
+* `z` = "zoom in" or "narrow":
+* `y` = copy column
+* `zy` = copy cell
+
+
+

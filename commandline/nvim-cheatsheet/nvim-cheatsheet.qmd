@@ -1,0 +1,386 @@
+---
+title: "Neovim Cheat Sheet: Essential Tricks and Shortcuts"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: true
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    css: 
+      - ./css/shadenote.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+code-fold: false
+bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote # has been integrated in include-code-files
+  - social-embeds # >> quarto install extension sellorm/quarto-social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+# source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+
+## Installation
+
+* Clone the dotfiles and copy the Neovim config into your `~/.config` directory:
+
+```bash
+git clone https://github.com/JakeJing/dotfiles.git
+mv dotfiles/.config/nvim -P ~/.config/
+```
+* Open `plugins.lua` and type `:w` to launch the auto-installation.
+* Use `:checkhealth` to verify that all dependencies are properly set up.
+
+
+## Navigation & Movements
+
+* `hjkl`: move left, down, up, right
+* `Ctrl+d/u`: scroll down/up one page
+* `Ctrl+n/p`: next/previous file in window
+* `i/I`: insert before cursor / at line start
+* `a/A`: append after cursor / at line end
+* `0` / `^`: go to line start
+* `$`: go to line end
+* `o/O`: new line below/above
+* `%`: jump between matching brackets
+* `b/e/w`: word navigation (back, end, next)
+* `f{x}` / `F{x}`: move to char `{x}` forward/back
+* `t{x}` / `T{x}`: move before char `{x}` forward/back
+* `''` or `g:`: go back to previous position
+* `o` (in visual mode): toggle selection endpoint
+
+
+
+## Bookmarks (with Telescope)
+
+* `mm`: toggle bookmark
+* `Shift+n`: next bookmark
+* `Shift+b`: previous bookmark
+* `ma`: view all bookmarks
+* `:Telescope vim_bookmarks all`: list all bookmarks
+* `:Telescope vim_bookmarks current_file`: list for current file
+
+
+## Deleting Text
+
+* `dd`: delete line
+* `3dd`: delete 3 lines
+* `D` or `d$`: delete to line end
+* `d0`: delete to line start
+* `x`: delete character under cursor
+* `dw`, `diw`, `daw`: delete word (various scopes)
+* `dip`: delete paragraph
+* `di"`: delete inside quotes
+* `:%d`: delete entire file content
+* `ci"` / `ci(`: delete and insert inside quotes/brackets
+
+
+
+## Joining Lines
+
+* `J`: join lines with space
+* `gJ`: join lines without space
+
+
+## Increment Numbers
+
+* Select numbers with `Ctrl+v`, then `g Ctrl+a` to increment
+
+
+## Word Count
+
+* `:WordCount`: custom word count (requires user-defined function)
+* `<leader>wc`: shortcut for word count
+
+
+## Selection (Visual Mode)
+
+* `v`, `V`, `Ctrl+v`: character, line, and block selection
+* `viw`, `vaw`: inside/around word
+* `vi{`: inside block (like function)
+* `f{char}` in visual mode: fast selection
+
+
+## Multi-line Insert & Append
+
+> Note: Only works in **visual block mode** (`Ctrl+v`).
+
+* **Insert start**: `Ctrl+v`, select, `Shift+i`, type, then `Esc`
+* **Append end**: `Ctrl+v`, select, `Shift+a`, type, then `Esc`
+* **Change text**: select block, press `c`, type, then `Esc`
+
+
+## Editing Text
+
+* `ci(`: change inside parentheses
+* `cip`: change inside paragraph
+* `cw`: change word
+
+
+## Yank & Paste
+
+* `yy`, `yiw`, `ya(`, `y2w`: yank lines, words, brackets
+* Use [neoclip](https://github.com/AckslD/nvim-neoclip.lua) for yank history:
+
+  * `<C-c>` to yank
+  * `<C-p>` to paste from history
+
+
+
+## Substitution
+
+* `S`: start substitution (`:%s//g` via remap)
+* `cgn`: change next match, repeat with `.`
+* Regex substitution:
+
+  ```vim
+  :%s/[-.+/a-zA-Z0-9"$]*\ze:/`\0`/g
+  ```
+* `R`: overwrite text
+* `:'<,'>s/old/new/g`: substitute in selection
+* `:cdo s/old/new/g`: substitute across quickfix list
+
+
+## Repeating & Undoing
+
+* `.`: repeat last change
+* `u` / `U`: undo / undo line
+* `Ctrl+r`: redo
+* `Ctrl+s`: open terminal in vertical split
+* `:vs | :term`: open vertical terminal
+
+
+## Quit & Save
+
+* `ZZ`: save and quit
+* `ZQ`: quit without saving
+
+
+## Key Mapping & Help
+
+### Special Keys
+
+```vim
+<Tab>, <CR>, <Esc>, <Space>, <A-j>, <C-s>, <Up>, <F1>...<F12>, etc.
+```
+
+### Check Mappings
+
+```vim
+:imap <A-j>
+:verbose imap <Tab>
+```
+
+### Help
+
+* `:h {key}` or `:help ctrl-w_<`
+* `:h telescope.command`, `:h regex`
+* `fh` or `<leader>fh`: floating help
+
+
+## Terminal Tricks
+
+* `Ctrl+s`: toggle floating terminal
+* `:r !ls`: insert output of shell command
+
+
+## TermVifm + Zoxide
+
+* Bind `vf` to launch `vifm`
+* Use `zoxide` with `<leader>Z` to jump to dirs
+
+  * Install with `brew install zoxide`
+  * Add to `config.fish`:
+
+    ```fish
+    zoxide init fish | source
+    ```
+
+
+## Search
+
+* `ff`: find file
+* `fa`: find all in buffer
+* `fw`: find word
+* `'Search`: exact match
+* `:set hlsearch` / `:nohlsearch`: toggle highlights
+
+
+
+## Buffers
+
+* `:bfirst`, `:blast`, `:bnext`, `:bprevious`
+* `:ls`: list buffers
+* `:bd [num]`: close buffer
+* `:b <TAB>`: autocomplete open buffers
+* `Ctrl+^`: toggle last buffer
+
+
+
+## Window Management
+
+* `Ctrl+w w`: switch windows
+* `Ctrl+w h/l`: left/right
+* `Ctrl+w _`: maximize
+* `Ctrl+w =`: equalize
+* `Ctrl+w R`: reverse splits
+* `Ctrl+w t Ctrl+w K`: horizontal → vertical
+* `Ctrl+w t Ctrl+w H`: vertical → horizontal
+* `Ctrl+Cmd+F` or `fn+F`: full screen
+
+
+
+## Git with LazyGit
+
+* `Ctrl+g`: open LazyGit
+* `c`: commit
+* `Shift+p`: push
+* `?`: help
+* `gl`: git logs
+
+
+
+## Linting & Formatting
+
+* `:NullLsInfo`: see current null-ls status
+* `:echo executable("eslint")`: check if installed
+* `:LspStop`: stop diagnostics
+
+
+## Registers & Special Characters
+
+```vim
+"%": current file
+"#": alternate file
+"*", "+": system clipboard
+"/": last search
+":": last command
+"-": last small delete
+".": last insert
+"=": expression register
+```
+
+
+## Cmdline Modes
+
+```vim
+:   Normal command
+>   Debug mode
+/   Forward search
+?   Backward search
+=   Expression
+@   Input()
+-   Insert/append text
+```
+
+* `q:`: show command history
+
