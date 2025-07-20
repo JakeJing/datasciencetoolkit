@@ -68,7 +68,9 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../css/webstyles.css">
+<link rel="stylesheet" href="../css/blogstyles.css">
+<link rel="stylesheet" href="../css/shadenote.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -165,7 +167,8 @@ ul.task-list li input[type="checkbox"] {
 
 
 <ul>
-<li><strong><a href="../programming/Jacobian-adjustment-normal/understanding-jacobian-adjustment.html">Understanding Jacobian Adjustments for Constrained Parameters in Stan</a></strong> - A simple example to illustrate how Jacobian adjustment works in Stan</li>
+<li><strong><a href="../programming/Jacobian-adjustment-normal/understanding-jacobian-adjustment.html">Understanding Jacobian Adjustments for Constrained Parameters in Stan</a></strong></li>
+<li><strong><a href="../programming/dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.html">Column-wise and row-wise operations in dplyr</a></strong></li>
 </ul>
 
 
@@ -263,7 +266,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/JakeJing\.github\.io\/datasciencetoolkit\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

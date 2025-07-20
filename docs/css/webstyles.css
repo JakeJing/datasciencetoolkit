@@ -1,0 +1,170 @@
+/*-- scss:defaults --*/
+
+// Custom color palette for data science
+$primary: #1f77b4;
+$secondary: #ff7f0e;
+$success: #2ca02c;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #d62728;
+
+// Typography
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-family-monospace: "JetBrains Mono", "Fira Code", monospace;
+
+// Layout
+$navbar-padding-y: 1rem;
+$navbar-brand-font-size: 1.5rem;
+
+/*-- scss:rules --*/
+
+// Hero section styling
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6rem 0;
+  text-align: center;
+  margin-bottom: 0;
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #fff, #e0e7ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+}
+
+// Skill badges
+.skill-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+}
+
+// Project cards
+.project-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.project-header {
+  background: linear-gradient(135deg, $primary, darken($primary, 10%));
+  color: white;
+  padding: 2rem;
+
+  .project-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-category {
+    opacity: 0.9;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+// Tech stack tags
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.tech-tag {
+  background: #f8f9fa;
+  color: #495057;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+// Metrics cards
+.metric-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .metric-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: $primary;
+    margin-bottom: 0.5rem;
+  }
+
+  .metric-label {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+// Code blocks
+.sourceCode {
+  background: #2d3748 !important;
+  border-radius: 8px;
+  padding: 1rem;
+
+  pre {
+    background: none !important;
+    border: none;
+    margin: 0;
+  }
+}
+
+// Custom button styles
+.btn-custom {
+  background: linear-gradient(135deg, $primary, darken($primary, 10%));
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+}

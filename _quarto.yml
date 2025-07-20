@@ -23,7 +23,10 @@ website:
 format:
   html:
     theme: cosmo
-    css: styles.css
+    css:
+      - css/webstyles.css
+      - css/blogstyles.css
+      - css/shadenote.css
     toc: true
     code-copy: true
     code-fold: false

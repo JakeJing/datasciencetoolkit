@@ -2,7 +2,7 @@
 title: "Programming"
 ---
 
-- **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** - A simple example to illustrate how Jacobian adjustment works in Stan
-- **[Column-wise and row-wise operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)** - Column-wise and row-wise operations in dplyr
+- **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** 
+- **[Column-wise and row-wise operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**
 
 

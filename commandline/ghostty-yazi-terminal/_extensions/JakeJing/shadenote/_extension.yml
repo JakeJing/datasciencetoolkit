@@ -1,7 +1,0 @@
-title: filter for shadenote
-author: Yingqi Jing
-version: 1.0.0
-quarto-required: ">=1.2"
-contributes:
-  filters:
-    - shadenote.lua

@@ -24,8 +24,8 @@ format:
     math: mathjax # or katex
     # theme: materia
     # fig-fold: false
-    css: 
-      - ./css/shadenote.css
+    #css: 
+    #  - ../css/shadenote.css
   pdf: # move before if you want to render it as a pdf
     pdf-engine: xelatex
     code-font: "Inconsolata"
