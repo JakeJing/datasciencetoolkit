@@ -32,7 +32,7 @@
     "href": "commandline/coverpage.html",
     "title": "Command Line Tools",
     "section": "",
-    "text": "Transform Your Terminal with Ghostty and Yazi - Ready your terminal emulator and file manager\nEssential Helix Commands - Useful Helix commands\nvisidata-commands-tricks - Useful visidata tricks\nnvim-cheatsheet - nvim cheatsheet"
+    "text": "Transform Your Terminal with Ghostty and Yazi\nEssential Helix Commands\nvisidata commands and tricks\nnvim cheatsheet"
   },
   {
     "objectID": "commandline/essential-helix-commands/essential-helix.html",
@@ -382,6 +382,6 @@
     "href": "programming/coverpage.html",
     "title": "Programming",
     "section": "",
-    "text": "Understanding Jacobian Adjustments for Constrained Parameters in Stan - A simple example to illustrate how Jacobian adjustment works in Stan\nColumn-wise and row-wise operations in dplyr - Column-wise and row-wise operations in dplyr"
+    "text": "Understanding Jacobian Adjustments for Constrained Parameters in Stan\nColumn-wise and row-wise operations in dplyr"
   }
 ]
