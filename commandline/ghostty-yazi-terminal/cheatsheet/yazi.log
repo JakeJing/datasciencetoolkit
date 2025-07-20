@@ -1,6 +1,7 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.3.14)  17 JUL 2025 09:32
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.3.14)  19 JUL 2025 10:24
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
 **yazi.tex
 (./yazi.tex
@@ -824,7 +825,7 @@ Overfull \hbox (488.46667pt too wide) in paragraph at lines 168--168
  []
 
 
-Overfull \vbox (9.10684pt too high) has occurred while \output is active []
+Overfull \vbox (9.4717pt too high) has occurred while \output is active []
 
 
 [1

@@ -1,0 +1,416 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{4}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{setspace}
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{note}{
+	colback=gray!10,
+	colframe=gray!80!black,
+	boxrule=0.5pt,
+	arc=2mm,
+	left=6pt,
+	right=6pt,
+	top=6pt,
+	bottom=6pt,
+	enhanced,
+	before upper={\setstretch{1.2}},
+}
+
+\newtcolorbox{example}{
+	colback=blue!10,
+	colframe=blue!80!black,
+	boxrule=0.5pt,
+	arc=2mm,
+	left=6pt,
+	right=6pt,
+	top=6pt,
+	bottom=6pt,
+	enhanced,
+	before upper={\setstretch{1.2}},
+}
+
+% \usepackage[most]{tcolorbox}
+% \newtcolorbox{shadednote}{
+%   colback=gray!10,
+%   colframe=gray!80!black,
+%   boxrule=0.5pt,
+%   arc=2mm,
+%   left=6pt,
+%   right=6pt,
+%   top=6pt,
+%   bottom=6pt,
+%   enhanced,
+%   before upper=\relax, % Do nothing, let it inherit
+% }
+% \newtcolorbox{shadednote}{
+%   colback=gray!10,
+%   colframe=gray!80!black,
+%   boxrule=0.5pt,
+%   arc=2mm,
+%   left=6pt,
+%   right=6pt,
+%   top=6pt,
+%   bottom=6pt,
+% }
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{named}{white}}{}
+\makeatother
+\makeatletter
+\@ifundefined{codebgcolor}{\definecolor{codebgcolor}{HTML}{f8f8f8}}{}
+\makeatother
+\makeatletter
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, sharp corners, boxrule=0pt, frame hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, colback={codebgcolor}]}{\end{tcolorbox}}\fi
+\makeatother
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Essential Helix Editor Commands},
+  pdfauthor={Yingqi Jing},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Essential Helix Editor Commands}
+\author{Yingqi Jing}
+\date{July 20, 2025}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\listoffigures
+\listoftables
+
+\clearpage
+
+\textbf{Note:} In Helix, \texttt{Alt} (or \texttt{A}) functions
+similarly to \texttt{Cmd} in Vim. Importantly, Helix uses a
+\emph{selection-first} model---you must select text before performing
+most actions.
+
+\subsection{\texorpdfstring{\textbf{Navigation}}{Navigation}}\label{navigation}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{h} / \texttt{j} / \texttt{k} / \texttt{l}: Move left, down,
+  up, right
+\item
+  \texttt{w} / \texttt{W} / \texttt{e} / \texttt{E} / \texttt{b} /
+  \texttt{B}: Word-based motion
+\item
+  \texttt{i} / \texttt{a} / \texttt{I} / \texttt{A}: Insert modes at
+  various positions
+\item
+  \texttt{f} / \texttt{F} / \texttt{t} / \texttt{T}: Jump to characters
+  in the current line
+\item
+  \texttt{gg}: Go to beginning of file
+\item
+  \texttt{ge}: Go to end of file
+\item
+  \texttt{gh}: Go to beginning of line
+\item
+  \texttt{gl}: Go to end of line
+\item
+  \texttt{u} / \texttt{U}: Undo / redo
+\item
+  \texttt{gr}: Go to reference
+\item
+  \texttt{gd}: Go to definition
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Deletion \&
+Change}}{Deletion \& Change}}\label{deletion-change}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{c}: Change character or selection
+\item
+  \texttt{dd}: Delete line (remapped)
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{File \& Command
+Access}}{File \& Command Access}}\label{file-command-access}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\textless{}Space\textgreater{}\ f}: File picker
+\item
+  \texttt{\textless{}Space\textgreater{}\ b}: Buffer picker
+\item
+  \texttt{\textless{}Space\textgreater{}\ ?}: Command palette
+\item
+  \texttt{ZZ}: Save and close
+\item
+  \texttt{ZQ}: Quit without saving
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Window
+Management}}{Window Management}}\label{window-management}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Ctrl-w\ v}: Split window vertically
+\item
+  \texttt{zz}: Center the current line on screen
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Selection}}{Selection}}\label{selection}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{v\ 2w}: Select the next two words
+\item
+  \texttt{x}: Expand selection downward
+\item
+  \texttt{X}: Expand selection upward
+\item
+  \texttt{5x}: Select current + 4 lines below
+\item
+  \texttt{2xv}: Combine with \texttt{jk} to resize selection
+\item
+  \texttt{mi"}: Select inside quotes
+\item
+  \texttt{miw}: Select inside word
+\item
+  \texttt{mip}: Select inside paragraph
+\item
+  \texttt{\%}: Select entire file
+\item
+  \texttt{\%s\textless{}pattern\textgreater{}}: Select file and match
+  pattern (regex supported); press \texttt{Esc} then \texttt{,} to exit
+  multiple cursors
+\item
+  \texttt{\textless{}Space\textgreater{}\ /}: Grep for word in current
+  directory, then \texttt{Ctrl+v} to open matches in vertical split
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Multiple
+Cursors}}{Multiple Cursors}}\label{multiple-cursors}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{C}: Duplicate cursor to the next match/line
+\item
+  \texttt{,}: Remove the most recent cursor
+\item
+  \texttt{vj\ C\ C\ C}: Select 2 lines and press \texttt{C} repeatedly
+  to create multiple cursors every 2 lines
+\item
+  \texttt{Ctrl+A} / \texttt{Ctrl+E}: Move all cursors to start/end of
+  line
+\item
+  \texttt{I} / \texttt{A}: Enter insert mode across all cursors
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Copy \&
+Paste}}{Copy \& Paste}}\label{copy-paste}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{x}: Select line
+\item
+  \texttt{p}: Paste from register
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Commands}}{Commands}}\label{commands}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\textbar{}} or \texttt{Cmd+!}: Pipe selection through shell
+  command (e.g., \texttt{\textbar{}\ sort} to sort lines)
+\end{itemize}
+
+\subsection{\texorpdfstring{\textbf{Definitions \&
+Diagnostics}}{Definitions \& Diagnostics}}\label{definitions-diagnostics}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{gd}: Go to definition
+\item
+  \texttt{Ctrl+o}: Go back to previous location
+\item
+  \texttt{Ctrl+i}: Go forward
+\item
+  \texttt{\textless{}Space\textgreater{}\ k}: Show function help
+\end{itemize}
+
+
+
+
+\end{document}

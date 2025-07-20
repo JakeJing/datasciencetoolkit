@@ -26,4 +26,6 @@ format:
     css: styles.css
     toc: true
     code-copy: true
-    code-fold: true
+    code-fold: false
+    # page-layout: full # or "custom" for wider than default
+    max-width: 1200px  # specify exact width in pixels

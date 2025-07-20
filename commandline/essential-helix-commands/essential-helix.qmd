@@ -1,0 +1,216 @@
+---
+title: "Essential Helix Commands"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: true
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    css: 
+      - ./css/shadenote.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: /Users/jakejing/git/knitr-markdown-engines/templates/shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+code-fold: false
+# bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+# csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote # has been integrated in include-code-files
+  - social-embeds # >> quarto install extension sellorm/quarto-social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+# source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+
+**Note:** In Helix, `Alt` (or `A`) functions similarly to `Cmd` in Vim. Importantly, Helix uses a *selection-first* model—you must select text before performing most actions.
+
+
+## **Navigation**
+
+* `h` / `j` / `k` / `l`: Move left, down, up, right
+* `w` / `W` / `e` / `E` / `b` / `B`: Word-based motion
+* `i` / `a` / `I` / `A`: Insert modes at various positions
+* `f` / `F` / `t` / `T`: Jump to characters in the current line
+* `gg`: Go to beginning of file
+* `ge`: Go to end of file
+* `gh`: Go to beginning of line
+* `gl`: Go to end of line
+* `u` / `U`: Undo / redo
+* `gr`: Go to reference
+* `gd`: Go to definition
+
+
+## **Deletion & Change**
+
+* `c`: Change character or selection
+* `xd` or `dd`: Delete line (remapped)
+* `:%d`: Delete entire file
+
+
+## **File & Command Access**
+
+
+* `<Space> f`: File picker
+* `<Space> b`: Buffer picker (all files in buffer)
+* `<Space> ?`: Command palette
+* `ZZ`: Save and close
+* `ZQ`: Quit without saving
+* `:q`: Quit
+
+
+
+## **Window Management**
+
+* `Ctrl-w v`: Split window vertically
+* `zz`: Center the current line on screen
+
+
+## **Selection**
+
+* `v 2w`: Select the next two words
+* `x`: Expand selection downward
+* `X`: Expand selection upward
+* `5x`: Select current + 4 lines below
+* `2xv`: Combine with `jk` to resize selection
+* `mi"`: Select inside quotes
+* `miw`: Select inside word
+* `mip`: Select inside paragraph
+* `%`: Select entire file
+* `%s<pattern>`: Select file and match pattern (regex supported); press `Esc` then `,` to exit multiple cursors
+* `<Space> /`: Grep for word in current directory, then `Ctrl+v` to open matches in vertical split
+
+
+## **Multiple Cursors**
+
+* `C`: Duplicate cursor to the next match/line
+* `,`: Remove the most recent cursor
+* `vj C C C`: Select 2 lines and press `C` repeatedly to create multiple cursors every 2 lines
+* `Ctrl+A` / `Ctrl+E`: Move all cursors to start/end of line
+* `I` / `A`: Enter insert mode across all cursors
+
+
+## **Copy & Paste**
+
+* `x`: Select line
+* `p`: Paste from register
+* `<Space> y`: Copy selection to global register
+
+## **Commands**
+
+* `|` or `Cmd+!`: Pipe selection through shell command (e.g., `| sort` to sort lines)
+
+
+## **Definitions & Diagnostics**
+
+* `gd`: Go to definition
+* `Ctrl+o`: Go back to previous location
+* `Ctrl+i`: Go forward
+* `<Space> k`: Show function help
+
