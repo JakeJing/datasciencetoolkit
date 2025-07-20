@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Yingqi Jing">
-<meta name="dcterms.date" content="2025-07-18">
+<meta name="dcterms.date" content="2025-07-20">
 
-<title>Transform Your Terminal with Ghostty and Yazi – Data Science Toolkit</title>
+<title>Essential Helix Commands – Data Science Toolkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -184,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Transform Your Terminal with Ghostty and Yazi</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Essential Helix Commands</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -210,27 +176,24 @@ window.Quarto = {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#install-ghostty" id="toc-install-ghostty" class="nav-link" data-scroll-target="#install-ghostty"><span class="header-section-number">2</span> Install Ghostty</a>
-  <ul>
-  <li><a href="#brew-install-ghostty" id="toc-brew-install-ghostty" class="nav-link" data-scroll-target="#brew-install-ghostty"><span class="header-section-number">2.1</span> brew install ghostty</a></li>
-  <li><a href="#set-ghostty-as-default-terminal-emulator-on-mac" id="toc-set-ghostty-as-default-terminal-emulator-on-mac" class="nav-link" data-scroll-target="#set-ghostty-as-default-terminal-emulator-on-mac"><span class="header-section-number">2.2</span> set ghostty as default terminal emulator on mac</a></li>
-  </ul></li>
-  <li><a href="#install-yazi" id="toc-install-yazi" class="nav-link" data-scroll-target="#install-yazi"><span class="header-section-number">3</span> Install Yazi</a>
-  <ul>
-  <li><a href="#brew-install-yazi-and-its-dependencies" id="toc-brew-install-yazi-and-its-dependencies" class="nav-link" data-scroll-target="#brew-install-yazi-and-its-dependencies"><span class="header-section-number">3.1</span> brew install yazi and its dependencies</a></li>
-  <li><a href="#set-alias-in-fish-config" id="toc-set-alias-in-fish-config" class="nav-link" data-scroll-target="#set-alias-in-fish-config"><span class="header-section-number">3.2</span> set alias in fish config</a></li>
-  <li><a href="#add-configuration-file-and-keymap-for-yazi" id="toc-add-configuration-file-and-keymap-for-yazi" class="nav-link" data-scroll-target="#add-configuration-file-and-keymap-for-yazi"><span class="header-section-number">3.3</span> add configuration file and keymap for yazi</a></li>
-  </ul></li>
+  <li><a href="#navigation" id="toc-navigation" class="nav-link active" data-scroll-target="#navigation"><span class="header-section-number">1</span> <strong>Navigation</strong></a></li>
+  <li><a href="#deletion-change" id="toc-deletion-change" class="nav-link" data-scroll-target="#deletion-change"><span class="header-section-number">2</span> <strong>Deletion &amp; Change</strong></a></li>
+  <li><a href="#file-command-access" id="toc-file-command-access" class="nav-link" data-scroll-target="#file-command-access"><span class="header-section-number">3</span> <strong>File &amp; Command Access</strong></a></li>
+  <li><a href="#window-management" id="toc-window-management" class="nav-link" data-scroll-target="#window-management"><span class="header-section-number">4</span> <strong>Window Management</strong></a></li>
+  <li><a href="#selection" id="toc-selection" class="nav-link" data-scroll-target="#selection"><span class="header-section-number">5</span> <strong>Selection</strong></a></li>
+  <li><a href="#multiple-cursors" id="toc-multiple-cursors" class="nav-link" data-scroll-target="#multiple-cursors"><span class="header-section-number">6</span> <strong>Multiple Cursors</strong></a></li>
+  <li><a href="#copy-paste" id="toc-copy-paste" class="nav-link" data-scroll-target="#copy-paste"><span class="header-section-number">7</span> <strong>Copy &amp; Paste</strong></a></li>
+  <li><a href="#commands" id="toc-commands" class="nav-link" data-scroll-target="#commands"><span class="header-section-number">8</span> <strong>Commands</strong></a></li>
+  <li><a href="#definitions-diagnostics" id="toc-definitions-diagnostics" class="nav-link" data-scroll-target="#definitions-diagnostics"><span class="header-section-number">9</span> <strong>Definitions &amp; Diagnostics</strong></a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ghostty-yazi.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="essential-helix.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Transform Your Terminal with Ghostty and Yazi</h1>
+<h1 class="title">Essential Helix Commands</h1>
 </div>
 
 
@@ -247,7 +210,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 18, 2025</p>
+      <p class="date">July 20, 2025</p>
     </div>
   </div>
   
@@ -259,100 +222,100 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>Why I Switched from Kitty and Vifm to Ghostty and Yazi? After years of experimenting with different terminal emulators and file managers, I’ve finally found my favorite combination: Ghostty and Yazi. These have recently gained a lot of popularity in the community. Briefly put, <a href="https://github.com/ghostty-org/ghostty">Ghostty</a> is a modern terminal emulator that is fast, feature-rich, and native. <a href="https://github.com/sxyazi/yazi">Yazi</a> is a blazing-fast terminal file manager. Together, they have transformed my daily workflow. In this blog, I’ll show you how to set them up on your own computer, so you can supercharge your terminal experience just like I did.</p>
-<p>Note: here I assume the default fish shell is used. You can install it in <a href="https://medium.com/p/6f9610276c33">this blog</a>.</p>
-</section>
-<section id="install-ghostty" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Install Ghostty</h1>
-<section id="brew-install-ghostty" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="brew-install-ghostty"><span class="header-section-number">2.1</span> brew install ghostty</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> ghostty</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="set-ghostty-as-default-terminal-emulator-on-mac" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="set-ghostty-as-default-terminal-emulator-on-mac"><span class="header-section-number">2.2</span> set ghostty as default terminal emulator on mac</h2>
+<p><strong>Note:</strong> In Helix, <code>Alt</code> (or <code>A</code>) functions similarly to <code>Cmd</code> in Vim. Importantly, Helix uses a <em>selection-first</em> model—you must select text before performing most actions.</p>
+<section id="navigation" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="navigation"><span class="header-section-number">1</span> <strong>Navigation</strong></h2>
 <ul>
-<li><ol type="1">
-<li>Install the “RCDefaultApp.prefPane” plugin</li>
-</ol></li>
+<li><code>h</code> / <code>j</code> / <code>k</code> / <code>l</code>: Move left, down, up, right</li>
+<li><code>w</code> / <code>W</code> / <code>e</code> / <code>E</code> / <code>b</code> / <code>B</code>: Word-based motion</li>
+<li><code>i</code> / <code>a</code> / <code>I</code> / <code>A</code>: Insert modes at various positions</li>
+<li><code>f</code> / <code>F</code> / <code>t</code> / <code>T</code>: Jump to characters in the current line</li>
+<li><code>gg</code>: Go to beginning of file</li>
+<li><code>ge</code>: Go to end of file</li>
+<li><code>gh</code>: Go to beginning of line</li>
+<li><code>gl</code>: Go to end of line</li>
+<li><code>u</code> / <code>U</code>: Undo / redo</li>
+<li><code>gr</code>: Go to reference</li>
+<li><code>gd</code>: Go to definition</li>
 </ul>
-<p>This plugin is used to set the default app for opening terminal in your system.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/JakeJing/fishconfig.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mv fishconfig/kitty/RCDefaultApp.prefPane /Library/PreferencePanes/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="deletion-change" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="deletion-change"><span class="header-section-number">2</span> <strong>Deletion &amp; Change</strong></h2>
 <ul>
-<li><ol start="2" type="1">
-<li>Set ghostty as the “default app” for opening terminal</li>
-</ol></li>
+<li><code>c</code>: Change character or selection</li>
+<li><code>xd</code> or <code>dd</code>: Delete line (remapped)</li>
+<li><code>:%d</code>: Delete entire file</li>
 </ul>
-<p>Go to system preferences -&gt; default Apps -&gt; click the “default Apps” -&gt; URLS -&gt; x-man-page -&gt; set the default application as “ghostty”.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/ghostty-default.png" class="img-fluid figure-img"></p>
-<figcaption>Set ghostty as default app for opening terminal</figcaption>
-</figure>
-</div>
+</section>
+<section id="file-command-access" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="file-command-access"><span class="header-section-number">3</span> <strong>File &amp; Command Access</strong></h2>
 <ul>
-<li><ol start="3" type="1">
-<li>Add keyboard shortcut (shift-cmd-1) to open a new Ghostty window here</li>
-</ol></li>
+<li><code>&lt;Space&gt; f</code>: File picker</li>
+<li><code>&lt;Space&gt; b</code>: Buffer picker (all files in buffer)</li>
+<li><code>&lt;Space&gt; ?</code>: Command palette</li>
+<li><code>ZZ</code>: Save and close</li>
+<li><code>ZQ</code>: Quit without saving</li>
+<li><code>:q</code>: Quit</li>
 </ul>
-<p>You can set a keyboard shortcut to open Ghostty here. However, the default option only works when your cursor is on a folder. To enable it when your cursor is on a file, you can create a new service using the Automator application. To do this, go to Automator -&gt; Quick Action, and follow the steps in the image below.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/automator-quick-action.png" class="img-fluid figure-img"></p>
-<figcaption>Automator Quick Action</figcaption>
-</figure>
-</div>
-<p>After that, you can go to System Preferences -&gt; Keyboard -&gt; Shortcuts -&gt; Services -&gt; open-ghostty-here to add it (shift-cmd-1).</p>
-<p><script src="https://gist.github.com/JakeJing/cea5f0ebbd29d01f57d82bde3cf2205d.js"></script></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/ghostty-window-here.png" class="img-fluid figure-img"></p>
-<figcaption>Add keyboard shortcut to open Ghostty here</figcaption>
-</figure>
-</div>
-<p>This will automatically open a new Ghostty window here when you press shift-cmd-1. If there is an ongoing Ghostty window, it will open a new tab instead. So far there is no easy way to always open a new window (rather than a new tab or a new process) on mac, as far as I know.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the services</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ~/Library/Services/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="window-management" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="window-management"><span class="header-section-number">4</span> <strong>Window Management</strong></h2>
 <ul>
-<li><ol start="4" type="1">
-<li>add configuration file for ghostty</li>
-</ol></li>
+<li><code>Ctrl-w v</code>: Split window vertically</li>
+<li><code>zz</code>: Center the current line on screen</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://raw.githubusercontent.com/JakeJing/dotfiles/refs/heads/main/.config/ghostty/config <span class="at">-P</span> ~/.config/ghostty/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="selection" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="selection"><span class="header-section-number">5</span> <strong>Selection</strong></h2>
+<ul>
+<li><code>v 2w</code>: Select the next two words</li>
+<li><code>x</code>: Expand selection downward</li>
+<li><code>X</code>: Expand selection upward</li>
+<li><code>5x</code>: Select current + 4 lines below</li>
+<li><code>2xv</code>: Combine with <code>jk</code> to resize selection</li>
+<li><code>mi"</code>: Select inside quotes</li>
+<li><code>miw</code>: Select inside word</li>
+<li><code>mip</code>: Select inside paragraph</li>
+<li><code>%</code>: Select entire file</li>
+<li><code>%s&lt;pattern&gt;</code>: Select file and match pattern (regex supported); press <code>Esc</code> then <code>,</code> to exit multiple cursors</li>
+<li><code>&lt;Space&gt; /</code>: Grep for word in current directory, then <code>Ctrl+v</code> to open matches in vertical split</li>
+</ul>
 </section>
-<section id="install-yazi" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Install Yazi</h1>
-<section id="brew-install-yazi-and-its-dependencies" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="brew-install-yazi-and-its-dependencies"><span class="header-section-number">3.1</span> brew install yazi and its dependencies</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> update</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install yazi ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide resvg imagemagick font-symbols-only-nerd-font</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="multiple-cursors" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="multiple-cursors"><span class="header-section-number">6</span> <strong>Multiple Cursors</strong></h2>
+<ul>
+<li><code>C</code>: Duplicate cursor to the next match/line</li>
+<li><code>,</code>: Remove the most recent cursor</li>
+<li><code>vj C C C</code>: Select 2 lines and press <code>C</code> repeatedly to create multiple cursors every 2 lines</li>
+<li><code>Ctrl+A</code> / <code>Ctrl+E</code>: Move all cursors to start/end of line</li>
+<li><code>I</code> / <code>A</code>: Enter insert mode across all cursors</li>
+</ul>
 </section>
-<section id="set-alias-in-fish-config" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="set-alias-in-fish-config"><span class="header-section-number">3.2</span> set alias in fish config</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># yazi</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> yz yazi</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> y yazi</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a yazi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="copy-paste" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="copy-paste"><span class="header-section-number">7</span> <strong>Copy &amp; Paste</strong></h2>
+<ul>
+<li><code>x</code>: Select line</li>
+<li><code>p</code>: Paste from register</li>
+<li><code>&lt;Space&gt; y</code>: Copy selection to global register</li>
+</ul>
 </section>
-<section id="add-configuration-file-and-keymap-for-yazi" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="add-configuration-file-and-keymap-for-yazi"><span class="header-section-number">3.3</span> add configuration file and keymap for yazi</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clone my dotfiles</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/JakeJing/dotfiles.git</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># move yazi config</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> dotfiles/.config/yazi <span class="at">-P</span> ~/.config/yazi/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><embed src="cheatsheet/yazi.pdf" style="width:100.0%" height="620"></p>
-<figcaption>Useful Yazi Keybindings</figcaption>
-</figure>
-</div>
+<section id="commands" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="commands"><span class="header-section-number">8</span> <strong>Commands</strong></h2>
+<ul>
+<li><code>|</code> or <code>Cmd+!</code>: Pipe selection through shell command (e.g., <code>| sort</code> to sort lines)</li>
+</ul>
+</section>
+<section id="definitions-diagnostics" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="definitions-diagnostics"><span class="header-section-number">9</span> <strong>Definitions &amp; Diagnostics</strong></h2>
+<ul>
+<li><code>gd</code>: Go to definition</li>
+<li><code>Ctrl+o</code>: Go back to previous location</li>
+<li><code>Ctrl+i</code>: Go forward</li>
+<li><code>&lt;Space&gt; k</code>: Show function help</li>
+</ul>
 
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

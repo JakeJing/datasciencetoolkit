@@ -168,10 +168,3 @@ $navbar-brand-font-size: 1.5rem;
     color: white;
   }
 }
-
-// Responsive design
-@media (max-width: 768px) {
-  .hero-section .hero-title {
-    font-size: 2.5rem;
-  }
-}
