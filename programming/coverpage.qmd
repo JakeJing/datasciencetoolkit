@@ -1,8 +1,15 @@
 ---
-title: "Programming"
+title: ""
 ---
 
-- **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** 
-- **[Column-wise and row-wise operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**
+
+## Stan
+
+### **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** 
+
+## R programming
+
+### **[Column-wise and row-wise operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**
+### **[A Gentle Introduction to Purrr](intro-purrr/intro-purrr.qmd)**
 
 

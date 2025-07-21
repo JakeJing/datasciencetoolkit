@@ -141,8 +141,17 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#transform-your-terminal-with-ghostty-and-yazi" id="toc-transform-your-terminal-with-ghostty-and-yazi" class="nav-link active" data-scroll-target="#transform-your-terminal-with-ghostty-and-yazi"><strong>Transform Your Terminal with Ghostty and Yazi</strong></a></li>
+  <li><a href="#essential-helix-commands" id="toc-essential-helix-commands" class="nav-link" data-scroll-target="#essential-helix-commands"><strong>Essential Helix Commands</strong></a></li>
+  <li><a href="#visidata-commands-and-tricks" id="toc-visidata-commands-and-tricks" class="nav-link" data-scroll-target="#visidata-commands-and-tricks"><strong>visidata commands and tricks</strong></a></li>
+  <li><a href="#nvim-cheatsheet" id="toc-nvim-cheatsheet" class="nav-link" data-scroll-target="#nvim-cheatsheet"><strong>nvim cheatsheet</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -166,14 +175,20 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<ul>
-<li><strong><a href="../commandline/ghostty-yazi-terminal/ghostty-yazi.html">Transform Your Terminal with Ghostty and Yazi</a></strong></li>
-<li><strong><a href="../commandline/essential-helix-commands/essential-helix.html">Essential Helix Commands</a></strong></li>
-<li><strong><a href="../commandline/visidata-commands-tricks/visidata-commands.html">visidata commands and tricks</a></strong></li>
-<li><strong><a href="../commandline/nvim-cheatsheet/nvim-cheatsheet.html">nvim cheatsheet</a></strong></li>
-</ul>
+<section id="transform-your-terminal-with-ghostty-and-yazi" class="level3">
+<h3 class="anchored" data-anchor-id="transform-your-terminal-with-ghostty-and-yazi"><strong><a href="../commandline/ghostty-yazi-terminal/ghostty-yazi.html">Transform Your Terminal with Ghostty and Yazi</a></strong></h3>
+</section>
+<section id="essential-helix-commands" class="level3">
+<h3 class="anchored" data-anchor-id="essential-helix-commands"><strong><a href="../commandline/essential-helix-commands/essential-helix.html">Essential Helix Commands</a></strong></h3>
+</section>
+<section id="visidata-commands-and-tricks" class="level3">
+<h3 class="anchored" data-anchor-id="visidata-commands-and-tricks"><strong><a href="../commandline/visidata-commands-tricks/visidata-commands.html">visidata commands and tricks</a></strong></h3>
+</section>
+<section id="nvim-cheatsheet" class="level3">
+<h3 class="anchored" data-anchor-id="nvim-cheatsheet"><strong><a href="../commandline/nvim-cheatsheet/nvim-cheatsheet.html">nvim cheatsheet</a></strong></h3>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -268,7 +283,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/JakeJing\.github\.io\/datasciencetoolkit\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

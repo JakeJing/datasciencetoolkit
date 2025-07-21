@@ -2,9 +2,9 @@
 title: "Command Line Tools"
 ---
 
-- **[Transform Your Terminal with Ghostty and Yazi](ghostty-yazi-terminal/ghostty-yazi.qmd)** 
-- **[Essential Helix Commands](essential-helix-commands/essential-helix.qmd)**
-- **[visidata commands and tricks](visidata-commands-tricks/visidata-commands.qmd)**
-- **[nvim cheatsheet](nvim-cheatsheet/nvim-cheatsheet.qmd)**
+### **[Transform Your Terminal with Ghostty and Yazi](ghostty-yazi-terminal/ghostty-yazi.qmd)** 
+### **[Essential Helix Commands](essential-helix-commands/essential-helix.qmd)**
+### **[visidata commands and tricks](visidata-commands-tricks/visidata-commands.qmd)**
+### **[nvim cheatsheet](nvim-cheatsheet/nvim-cheatsheet.qmd)**
 
 

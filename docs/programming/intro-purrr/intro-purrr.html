@@ -9,7 +9,7 @@
 <meta name="author" content="Yingqi Jing">
 <meta name="dcterms.date" content="2025-07-21">
 
-<title>Column-wise and row-wise operations in dplyr – Data Science Toolkit</title>
+<title>A Gentle Introduction to purrr – Data Science Toolkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -185,7 +185,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Column-wise and row-wise operations in dplyr</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">A Gentle Introduction to <code>purrr</code></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -211,18 +211,22 @@ window.Quarto = {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#column-wise-operation" id="toc-column-wise-operation" class="nav-link active" data-scroll-target="#column-wise-operation"><span class="header-section-number">1</span> Column-wise operation</a></li>
-  <li><a href="#row-wise-operation" id="toc-row-wise-operation" class="nav-link" data-scroll-target="#row-wise-operation"><span class="header-section-number">2</span> Row-wise operation</a></li>
-  <li><a href="#related-links" id="toc-related-links" class="nav-link" data-scroll-target="#related-links"><span class="header-section-number">3</span> Related links:</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#select-elements" id="toc-select-elements" class="nav-link" data-scroll-target="#select-elements"><span class="header-section-number">2</span> Select Elements</a></li>
+  <li><a href="#filter-elements" id="toc-filter-elements" class="nav-link" data-scroll-target="#filter-elements"><span class="header-section-number">3</span> Filter Elements</a></li>
+  <li><a href="#modify-elements" id="toc-modify-elements" class="nav-link" data-scroll-target="#modify-elements"><span class="header-section-number">4</span> Modify Elements</a></li>
+  <li><a href="#combine-lists" id="toc-combine-lists" class="nav-link" data-scroll-target="#combine-lists"><span class="header-section-number">5</span> Combine Lists</a></li>
+  <li><a href="#summarize-elements" id="toc-summarize-elements" class="nav-link" data-scroll-target="#summarize-elements"><span class="header-section-number">6</span> Summarize Elements</a></li>
+  <li><a href="#further-reading-resources" id="toc-further-reading-resources" class="nav-link" data-scroll-target="#further-reading-resources"><span class="header-section-number">7</span> Further Reading &amp; Resources</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="dplyr-columnwise-rowwise.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="intro-purrr.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Column-wise and row-wise operations in dplyr</h1>
+<h1 class="title">A Gentle Introduction to <code>purrr</code></h1>
 </div>
 
 
@@ -251,222 +255,278 @@ window.Quarto = {
 </header>
 
 
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>The <a href="https://purrr.tidyverse.org/"><code>purrr</code></a> package in R provides a powerful set of tools for working with lists and vectors in a functional programming style. Functions like <code>map()</code>, <code>map_lgl()</code>, <code>map_chr()</code>, <code>map_int()</code>, and <code>map_dbl()</code> allow you to iterate over elements cleanly and efficiently—offering a more readable and pipe-friendly alternative to <code>for</code> loops and <code>lapply()</code>.</p>
+<p>For example, here is a comparison of using a <code>for</code> loop versus <code>purrr::map_dbl()</code>:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="logos/dplyrlogs.png" style="width:70.0%;height:70.0%" class="figure-img"></p>
-<figcaption>row-wise and column-wise operations</figcaption>
+<p><img src="figures/map_dbl_for_loop.png" style="width:70.0%;height:70.0%" class="figure-img"></p>
+<figcaption>Comparison between for loops and map&nbsp;dbl functions</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>With the development of <strong>dplyr</strong> or its umbrella package <strong>tidyverse</strong>, it becomes quite easy to perform operations over columns or rows in R. These column- or row-wise methods can also be directly integrated with other dplyr verbs like <code>select</code>, <code>mutate</code>, <code>filter</code> and <code>summarise</code>, making them more comparable with other functions in <code>apply</code> or <code>map</code> families. In this blog, I will briefly cover some useful column- or row-wise operations.</p>
-<section id="column-wise-operation" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Column-wise operation</h1>
-<p><strong>Example 1:</strong> select those string columns with less than 5 levels in the dataset of <strong>starwars</strong>.</p>
+<p>The <code>map</code> family contains a number of type-specific variants. While <code>map()</code> returns a list and supports varying return types and lengths, its variants ensure a consistent output format:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Output Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>map()</code></td>
+<td>List</td>
+</tr>
+<tr class="even">
+<td><code>map_dbl()</code></td>
+<td>Double / numeric vector</td>
+</tr>
+<tr class="odd">
+<td><code>map_int()</code></td>
+<td>Integer vector</td>
+</tr>
+<tr class="even">
+<td><code>map_lgl()</code></td>
+<td>Logical vector</td>
+</tr>
+<tr class="odd">
+<td><code>map_chr()</code></td>
+<td>Character vector</td>
+</tr>
+<tr class="even">
+<td><code>map_dfr()</code></td>
+<td>Data frame (row bind)</td>
+</tr>
+<tr class="odd">
+<td><code>map_dfc()</code></td>
+<td>Data frame (col bind)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="select-elements" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Select Elements</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(<span class="sc">~</span> <span class="fu">any</span>(<span class="fu">is.character</span>(.x) <span class="sc">&amp;</span> <span class="fu">length</span>(<span class="fu">unique</span>(.x)) <span class="sc">&lt;=</span> <span class="dv">5</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 2
-  sex    gender   
-  &lt;chr&gt;  &lt;chr&gt;    
-1 male   masculine
-2 none   masculine
-3 none   masculine
-4 male   masculine
-5 female feminine 
-6 male   masculine</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>list_abc <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">b =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), <span class="at">c =</span> <span class="fu">c</span>(<span class="st">"m"</span>, <span class="st">"n"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>We can combine <code>select_if</code> and <code>any</code> to identify certain columns by certain criterion. <strong>Note:</strong> we are using tilde (~) to define an anonymous function, and thus we should use <code>.x</code> to refer to the selected columns. See this <a href="https://www.youtube.com/watch?v=ynaHKNdAAwk&amp;t=364s">link</a> for detailed illustration of tilde (~), dot (.), and dot x (.x) in dplyr.</p>
-<p>If you want to calculate the levels of those selected columns, you can try <code>across</code> function and <code>summarise</code> the number of levels by column.</p>
+<p><strong>Example 1: Select elements by name or index</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span> <span class="fu">length</span>(<span class="fu">unique</span>(.x))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recommended: using subset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> .[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)]  <span class="co"># or .[1:2]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Using magrittr::extract</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> magrittr<span class="sc">::</span><span class="fu">extract</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"c"</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Base R style</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>list_abc[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 8
-   name hair_color skin_color eye_color   sex gender homeworld species
-  &lt;int&gt;      &lt;int&gt;      &lt;int&gt;     &lt;int&gt; &lt;int&gt;  &lt;int&gt;     &lt;int&gt;   &lt;int&gt;
-1    87         12         31        15     5      3        49      38</code></pre>
-</div>
-</div>
-<p>Alternatively, you can make use of the <code>map</code> or <code>map_dbl</code> function in <strong>purrr</strong> by the following command. Note that when a <code>map</code> function is applied to a data.frame, it will operate over columns by default.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map_dbl returns a double vector, while map returns a list</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(<span class="sc">~</span> <span class="fu">is.character</span>(.x)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">length</span>(<span class="fu">unique</span>(.x))) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      name hair_color skin_color  eye_color        sex     gender 
-        87         12         31         15          5          3 </code></pre>
-</div>
-</div>
-<p><strong>Example 2:</strong> select those numeric columns and calculate the means and sds across columns in the dataset of <strong>starwars</strong>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">where</span>(<span class="sc">~</span> <span class="fu">is.numeric</span>(.x)),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">list</span>(<span class="at">Mean =</span> <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">Sd =</span> <span class="sc">~</span> <span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 6
-  height_Mean height_Sd mass_Mean mass_Sd birth_year_Mean birth_year_Sd
-        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;           &lt;dbl&gt;         &lt;dbl&gt;
-1        175.      34.8      97.3    169.            87.6          155.</code></pre>
-</div>
-</div>
-<p>This example provides us a good illustration of the use of <code>.x</code> in <strong>dplyr</strong> style syntax, since we have some missing values (NAs) in certain columns. Thus, we need to specify the parameter with <code>na.rm = TRUE</code> inside the functions.</p>
-<p>There is indeed a more convenient and elegant way of solving this by using the function <code>summarise_if</code>. It allows us to select certain columns and operate by columns like this:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_if</span>(is.numeric,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">Sum =</span> sum, <span class="at">Mean =</span> mean, <span class="at">Sd =</span> sd),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 9
-  height_Sum mass_Sum birth_year_Sum height_Mean mass_Mean birth_year_Mean height_Sd mass_Sd birth_year_Sd
-       &lt;int&gt;    &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;
-1      14143    5741.          3765.        175.      97.3            87.6      34.8    169.          155.</code></pre>
+<pre><code>$a
+[1] 1 2
+
+$b
+[1] 3 4 5
+
+$a
+[1] 1 2
+
+$c
+[1] "m" "n"
+
+$a
+[1] 1 2
+
+$b
+[1] 3 4 5</code></pre>
 </div>
 </div>
 </section>
-<section id="row-wise-operation" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Row-wise operation</h1>
-<p><strong>Example 3:</strong> calculate the <strong>sums</strong>, <strong>means</strong> and <strong>sds</strong> for each row for the dataset of <strong>iris</strong>.</p>
+<section id="filter-elements" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Filter Elements</h1>
+<p><strong>Example 2: Filter based on conditions</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsum =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsd =</span> <span class="fu">sd</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowmean =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width))</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep elements with length 2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">keep</span>(<span class="sc">~</span> <span class="fu">length</span>(.x) <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Discard character vectors</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">discard</span>(is.character)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop NULL elements</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">append</span>(<span class="fu">list</span>(<span class="at">d =</span> <span class="cn">NULL</span>)) <span class="sc">%&gt;%</span> <span class="fu">compact</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 8
-  Sepal.Length Sepal.Width Petal.Length Petal.Width Species Rowsum Rowsd Rowmean
-         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-1          5.1         3.5          1.4         0.2 setosa    10.2  2.18    2.55
-2          4.9         3            1.4         0.2 setosa     9.5  2.04    2.38
-3          4.7         3.2          1.3         0.2 setosa     9.4  2.00    2.35
-4          4.6         3.1          1.5         0.2 setosa     9.4  1.91    2.35
-5          5           3.6          1.4         0.2 setosa    10.2  2.16    2.55
-6          5.4         3.9          1.7         0.4 setosa    11.4  2.23    2.85</code></pre>
+<pre><code>$a
+[1] 1 2
+
+$c
+[1] "m" "n"
+
+$a
+[1] 1 2
+
+$b
+[1] 3 4 5
+
+$a
+[1] 1 2
+
+$b
+[1] 3 4 5
+
+$c
+[1] "m" "n"</code></pre>
 </div>
 </div>
-<p>Here the function <code>c_across</code> is specifically designed to work with <code>rowwise</code> operations. <strong>Note:</strong> <code>rowwise</code> groups your data by row (class: <em>rowwise_df</em>), and it is best to <code>ungroup</code> immediately. Of course, if you are more comfortable with the <code>apply</code> function, you can also use the following command:</p>
+<p><strong>Example 3: Slice elements inside the list</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sepal.Length<span class="sc">:</span>Petal.Width) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(., <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="fu">sum</span>(x), <span class="fu">sd</span>(x), <span class="fu">mean</span>(x))) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First element from each</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="dv">1</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># First two elements from each</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span> .x[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   [,1]     [,2]  [,3]
-V1 10.2 2.179449 2.550
-V2  9.5 2.036950 2.375
-V3  9.4 1.997498 2.350
-V4  9.4 1.912241 2.350
-V5 10.2 2.156386 2.550
-V6 11.4 2.230844 2.850</code></pre>
+<pre><code>$a
+[1] 1
+
+$b
+[1] 3
+
+$c
+[1] "m"
+
+$a
+[1] 1 2
+
+$b
+[1] 3 4
+
+$c
+[1] "m" "n"</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsum =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowmean =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rowsd =</span> <span class="fu">sd</span>(<span class="fu">c_across</span>(Sepal.Length<span class="sc">:</span>Petal.Width)),</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="st">"Species"</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 8
-  Sepal.Length Sepal.Width Petal.Length Petal.Width Rowsum Rowmean Rowsd Species
-         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  
-1          5.1         3.5          1.4         0.2   10.2    2.55  2.18 setosa 
-2          4.9         3            1.4         0.2    9.5    2.38  2.04 setosa 
-3          4.7         3.2          1.3         0.2    9.4    2.35  2.00 setosa 
-4          4.6         3.1          1.5         0.2    9.4    2.35  1.91 setosa 
-5          5           3.6          1.4         0.2   10.2    2.55  2.16 setosa 
-6          5.4         3.9          1.7         0.4   11.4    2.85  2.23 setosa </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> <span class="fu">pmap</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="sc">~</span> {</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">list</span>(<span class="at">rsum =</span> sum, <span class="at">rmean =</span> mean) <span class="sc">%&gt;%</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">map_dfc</span>(<span class="cf">function</span>(f) <span class="fu">f</span>(<span class="fu">c</span>(...)))</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    }),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="st">"Sepal.Length"</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(row) <span class="sc">%&gt;%</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-   rsum rmean Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-  &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
-1  10.2  2.55          5.1         3.5          1.4         0.2 setosa 
-2   9.5  2.38          4.9         3            1.4         0.2 setosa 
-3   9.4  2.35          4.7         3.2          1.3         0.2 setosa 
-4   9.4  2.35          4.6         3.1          1.5         0.2 setosa 
-5  10.2  2.55          5           3.6          1.4         0.2 setosa 
-6  11.4  2.85          5.4         3.9          1.7         0.4 setosa </code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">row =</span> <span class="fu">pmap</span>(</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">across</span>(Sepal.Length<span class="sc">:</span>Petal.Width),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">rsum =</span> <span class="fu">sum</span>(<span class="fu">c</span>(...)),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">rmean =</span> <span class="fu">mean</span>(<span class="fu">c</span>(...)),</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">rsd =</span> <span class="fu">sd</span>(<span class="fu">c</span>(...))</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">.before =</span> <span class="st">"Sepal.Length"</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(row) <span class="sc">%&gt;%</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 8
-   rsum rmean   rsd Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
-1  10.2  2.55  2.18          5.1         3.5          1.4         0.2 setosa 
-2   9.5  2.38  2.04          4.9         3            1.4         0.2 setosa 
-3   9.4  2.35  2.00          4.7         3.2          1.3         0.2 setosa 
-4   9.4  2.35  1.91          4.6         3.1          1.5         0.2 setosa 
-5  10.2  2.55  2.16          5           3.6          1.4         0.2 setosa 
-6  11.4  2.85  2.23          5.4         3.9          1.7         0.4 setosa </code></pre>
-</div>
-</div>
-<!-- 
-iris %>%
-  reframe(newcol = pmap(
-    across(Sepal.Length:Petal.Width), ~ {
-      list(sum, mean, sd) %>%
-        purrr::map(., function(f) f(c(...)))
-    }
-  )) %>%
-  head()
--->
 </section>
-<section id="related-links" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Related links:</h1>
+<section id="modify-elements" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Modify Elements</h1>
+<p><strong>Example 4: Modify with conditions</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add 1 to numeric elements</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">keep</span>(is.numeric) <span class="sc">%&gt;%</span> <span class="fu">modify</span>(<span class="sc">~</span> .x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Modify if numeric, leave others unchanged</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">modify_if</span>(is.numeric, <span class="sc">~</span> .x <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Modify elements at positions 1 and 2</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">modify_at</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="sc">~</span> .x <span class="sc">+</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1] 2 3
+
+$b
+[1] 4 5 6
+
+$a
+[1] 2 3
+
+$b
+[1] 4 5 6
+
+$c
+[1] "m" "n"
+
+$a
+[1] 11 12
+
+$b
+[1] 13 14 15
+
+$c
+[1] "m" "n"</code></pre>
+</div>
+</div>
+</section>
+<section id="combine-lists" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Combine Lists</h1>
+<p><strong>Example 5: Combine multiple lists</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Append b to a</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>a <span class="sc">%&gt;%</span> <span class="fu">append</span>(b)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepend b to a</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>a <span class="sc">%&gt;%</span> <span class="fu">prepend</span>(b)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Splice multiple lists together</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>a <span class="sc">%&gt;%</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">splice</span>(b, c) <span class="sc">%&gt;%</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_names</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))  <span class="co"># or use: set_names(toupper)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$a
+[1] 1 2
+
+$b
+[1] 3 4
+
+$b
+[1] 3 4
+
+$a
+[1] 1 2
+
+$A
+[1] 1 2
+
+$B
+[1] 3 4
+
+$C
+[1] 5 6</code></pre>
+</div>
+</div>
+</section>
+<section id="summarize-elements" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Summarize Elements</h1>
+<p><strong>Example 6: Reduce to a single result</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>list_abc <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Element-wise sum</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">reduce</span>(<span class="st">`</span><span class="at">+</span><span class="st">`</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Element-wise multiplication</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>list_abc <span class="sc">%&gt;%</span> <span class="fu">reduce</span>(<span class="st">`</span><span class="at">*</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  9 12
+[1] 15 48</code></pre>
+</div>
+</div>
+<p><strong>Example 7: Reduce by groups</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>list_abc <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">b =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">c =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Group-wise summation: first two together, third separately</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">%&gt;%</span> <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">reduce</span>(list_abc[.x], <span class="st">`</span><span class="at">+</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[1] 4 6
+
+[[2]]
+[1] 5 6</code></pre>
+</div>
+</div>
+</section>
+<section id="further-reading-resources" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Further Reading &amp; Resources</h1>
 <ul>
-<li><a href="https://dplyr.tidyverse.org/articles/rowwise.html">https://dplyr.tidyverse.org/articles/rowwise.html</a></li>
-<li><a href="https://purrr.tidyverse.org/reference/map.html">https://purrr.tidyverse.org/reference/map.html</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf">purrr Cheat Sheet (RStudio)</a></li>
+<li><a href="https://brad-cannell.github.io/r4epi/using-the-purrr-package.html">Using the purrr Package (r4epi)</a></li>
+<li><a href="https://dcl-prog.stanford.edu/purrr-extras.html">purrr extras — Stanford DCL</a></li>
+<li><a href="https://dcl-prog.stanford.edu/purrr-parallel.html">purrr for Parallelism — Stanford DCL</a></li>
 </ul>
 
 

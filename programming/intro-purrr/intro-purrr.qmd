@@ -1,0 +1,276 @@
+---
+title: "A Gentle Introduction to `purrr`"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: false
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    #css: 
+    #  - ./css/shadenote.css
+  pdf: # move before if you want to render it as a pdf
+    pdf-engine: xelatex
+    code-font: "Inconsolata"
+    include-in-header: ../../shadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+code-fold: false
+# bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+# csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote # has been integrated in include-code-files
+  - social-embeds # >> quarto install extension sellorm/quarto-social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+# source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+
+# Introduction
+
+The [`purrr`](https://purrr.tidyverse.org/) package in R provides a powerful set of tools for working with lists and vectors in a functional programming style. Functions like `map()`, `map_lgl()`, `map_chr()`, `map_int()`, and `map_dbl()` allow you to iterate over elements cleanly and efficiently—offering a more readable and pipe-friendly alternative to `for` loops and `lapply()`.
+
+For example, here is a comparison of using a `for` loop versus `purrr::map_dbl()`:
+
+
+```{r}
+#| echo: false
+#| fig.cap: "Comparison between for loops and map\_dbl functions"
+#| out-width: 70%
+#| out-height: 70%
+knitr::include_graphics("figures/map_dbl_for_loop.png")
+```
+
+
+
+The `map` family contains a number of type-specific variants. While `map()` returns a list and supports varying return types and lengths, its variants ensure a consistent output format:
+
+| Function    | Output Type             |
+| ----------- | ----------------------- |
+| `map()`     | List                    |
+| `map_dbl()` | Double / numeric vector |
+| `map_int()` | Integer vector          |
+| `map_lgl()` | Logical vector          |
+| `map_chr()` | Character vector        |
+| `map_dfr()` | Data frame (row bind)   |
+| `map_dfc()` | Data frame (col bind)   |
+
+
+# Select Elements
+
+```{r}
+list_abc <- list(a = c(1, 2), b = c(3, 4, 5), c = c("m", "n"))
+```
+
+**Example 1: Select elements by name or index**
+
+```{r}
+# Recommended: using subset
+list_abc %>% .[c("a", "b")]  # or .[1:2]
+
+# Using magrittr::extract
+list_abc %>% magrittr::extract(c("a", "c"))
+
+# Base R style
+list_abc[c("a", "b")]
+```
+
+
+# Filter Elements
+
+**Example 2: Filter based on conditions**
+
+```{r}
+# Keep elements with length 2
+list_abc %>% keep(~ length(.x) == 2)
+
+# Discard character vectors
+list_abc %>% discard(is.character)
+
+# Drop NULL elements
+list_abc %>% append(list(d = NULL)) %>% compact()
+```
+
+**Example 3: Slice elements inside the list**
+
+```{r}
+# First element from each
+list_abc %>% map(1)
+
+# First two elements from each
+list_abc %>% map(~ .x[1:2])
+```
+
+
+# Modify Elements
+
+**Example 4: Modify with conditions**
+
+```{r}
+# Add 1 to numeric elements
+list_abc %>% keep(is.numeric) %>% modify(~ .x + 1)
+
+# Modify if numeric, leave others unchanged
+list_abc %>% modify_if(is.numeric, ~ .x + 1)
+
+# Modify elements at positions 1 and 2
+list_abc %>% modify_at(1:2, ~ .x + 10)
+```
+
+
+# Combine Lists
+
+**Example 5: Combine multiple lists**
+
+```{r}
+a <- list(a = 1:2)
+b <- list(b = 3:4)
+c <- list(c = 5:6)
+
+# Append b to a
+a %>% append(b)
+
+# Prepend b to a
+a %>% prepend(b)
+
+# Splice multiple lists together
+a %>%
+  splice(b, c) %>%
+  set_names(c("A", "B", "C"))  # or use: set_names(toupper)
+```
+
+
+# Summarize Elements
+
+**Example 6: Reduce to a single result**
+
+```{r}
+list_abc <- list(a = 1:2, b = 3:4, c = 5:6)
+
+# Element-wise sum
+list_abc %>% reduce(`+`)
+
+# Element-wise multiplication
+list_abc %>% reduce(`*`)
+```
+
+**Example 7: Reduce by groups**
+
+```{r}
+list_abc <- list(a = 1:2, b = 3:4, c = 5:6)
+
+# Group-wise summation: first two together, third separately
+list(1:2, 3) %>% map(~ reduce(list_abc[.x], `+`))
+```
+
+
+# Further Reading & Resources
+
+* [purrr Cheat Sheet (RStudio)](https://github.com/rstudio/cheatsheets/blob/master/purrr.pdf)
+* [Using the purrr Package (r4epi)](https://brad-cannell.github.io/r4epi/using-the-purrr-package.html)
+* [purrr extras — Stanford DCL](https://dcl-prog.stanford.edu/purrr-extras.html)
+* [purrr for Parallelism — Stanford DCL](https://dcl-prog.stanford.edu/purrr-parallel.html)
+
