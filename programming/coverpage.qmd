@@ -11,5 +11,5 @@ title: ""
 
 ### **[Column-wise and row-wise operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**
 ### **[A Gentle Introduction to Purrr](intro-purrr/intro-purrr.qmd)**
-
+### **[Nested vs. Splitted Structures in Data Simulation and Inference](nested_splitted_data_structure/nested_splitted_structure.qmd)**
 
