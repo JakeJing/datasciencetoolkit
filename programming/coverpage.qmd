@@ -6,10 +6,11 @@ title: ""
 ## Stan
 
 ### **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** 
+### **[simulation-based-lmer-stan](simulation-based-lmer-stan/simulation-based-lmer-stan.qmd)** 
 
 ## R programming
 
-### **[Column-wise and row-wise operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**
+### **[Column-wise and Row-wise Operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**
 ### **[A Gentle Introduction to Purrr](intro-purrr/intro-purrr.qmd)**
 ### **[Nested vs. Splitted Structures in Data Simulation and Inference](nested_splitted_data_structure/nested_splitted_structure.qmd)**
 
