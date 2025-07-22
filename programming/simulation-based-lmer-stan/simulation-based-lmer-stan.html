@@ -514,10 +514,10 @@ y = X\beta + Zb =
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(random_outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           [,1]       [,2]
-[1,] -0.5378956 -0.8339557
-[2,]  2.4729827  2.3713665
-[3,]  5.1536817  2.4214568
-[1] -1.371851 -2.205807 -3.039763 -3.873719 -4.707674 -5.541630</code></pre>
+[1,]   1.240362  1.0680322
+[2,] -11.199616 -5.2925799
+[3,]   3.615995 -0.4609161
+[1] 2.308395 3.376427 4.444459 5.512491 6.580523 7.648556</code></pre>
 </div>
 </div>
 <ul>
@@ -530,13 +530,13 @@ y = X\beta + Zb =
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> fixed_outcome <span class="sc">+</span> random_outcome <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(df), <span class="dv">0</span>, <span class="dv">1</span>))</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_final)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  intercept x group_id         y fixed_outcome random_outcome
-1         1 1        1  9.875201            10      -1.371851
-2         1 2        1 12.351162            14      -2.205807
-3         1 3        1 13.288599            18      -3.039763
-4         1 4        1 17.672945            22      -3.873719
-5         1 5        1 20.997123            26      -4.707674
-6         1 6        1 25.655077            30      -5.541630</code></pre>
+<pre><code>  intercept x group_id        y fixed_outcome random_outcome
+1         1 1        1 14.54308            10       2.308395
+2         1 2        1 15.86841            14       3.376427
+3         1 3        1 23.07787            18       4.444459
+4         1 4        1 27.69039            22       5.512491
+5         1 5        1 30.78189            26       6.580523
+6         1 6        1 36.86957            30       7.648556</code></pre>
 </div>
 </div>
 </section>
