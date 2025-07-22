@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Yingqi Jing">
-<meta name="dcterms.date" content="2025-07-21">
 
-<title>Essential Helix Commands – Data Science Toolkit</title>
+<title>coverpage – Data Science Toolkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -69,39 +67,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../../css/webstyles.css">
-<link rel="stylesheet" href="../../css/blogstyles.css">
-<link rel="stylesheet" href="../../css/shadenote.css">
+<link rel="stylesheet" href="../css/webstyles.css">
+<link rel="stylesheet" href="../css/blogstyles.css">
+<link rel="stylesheet" href="../css/shadenote.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed">
@@ -111,7 +80,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Data Science Toolkit</span>
     </a>
   </div>
@@ -122,19 +91,19 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../statistical_modeling/coverpage.html"> 
+    <a class="nav-link active" href="../statistical_modeling/coverpage.html" aria-current="page"> 
 <span class="menu-text">Statistical Modeling</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../programming/coverpage.html"> 
+    <a class="nav-link" href="../programming/coverpage.html"> 
 <span class="menu-text">Programming</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../commandline/coverpage.html"> 
+    <a class="nav-link" href="../commandline/coverpage.html"> 
 <span class="menu-text">Command Line</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -155,7 +124,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Essential Helix Commands</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -178,147 +147,29 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+    <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#navigation" id="toc-navigation" class="nav-link active" data-scroll-target="#navigation"><span class="header-section-number">1</span> Navigation</a></li>
-  <li><a href="#deletion-change" id="toc-deletion-change" class="nav-link" data-scroll-target="#deletion-change"><span class="header-section-number">2</span> Deletion &amp; Change</a></li>
-  <li><a href="#file-command-access" id="toc-file-command-access" class="nav-link" data-scroll-target="#file-command-access"><span class="header-section-number">3</span> File &amp; Command Access</a></li>
-  <li><a href="#window-management" id="toc-window-management" class="nav-link" data-scroll-target="#window-management"><span class="header-section-number">4</span> Window Management</a></li>
-  <li><a href="#selection" id="toc-selection" class="nav-link" data-scroll-target="#selection"><span class="header-section-number">5</span> Selection</a></li>
-  <li><a href="#multiple-cursors" id="toc-multiple-cursors" class="nav-link" data-scroll-target="#multiple-cursors"><span class="header-section-number">6</span> Multiple Cursors</a></li>
-  <li><a href="#copy-paste" id="toc-copy-paste" class="nav-link" data-scroll-target="#copy-paste"><span class="header-section-number">7</span> Copy &amp; Paste</a></li>
-  <li><a href="#commands" id="toc-commands" class="nav-link" data-scroll-target="#commands"><span class="header-section-number">8</span> Commands</a></li>
-  <li><a href="#definitions-diagnostics" id="toc-definitions-diagnostics" class="nav-link" data-scroll-target="#definitions-diagnostics"><span class="header-section-number">9</span> Definitions &amp; Diagnostics</a></li>
+  <li><a href="#understanding-jacobian-adjustments-for-constrained-parameters-in-stan" id="toc-understanding-jacobian-adjustments-for-constrained-parameters-in-stan" class="nav-link active" data-scroll-target="#understanding-jacobian-adjustments-for-constrained-parameters-in-stan"><strong>Understanding Jacobian Adjustments for Constrained Parameters in Stan</strong></a></li>
+  <li><a href="#simulation-based-linear-mixed-effects-models-with-stan" id="toc-simulation-based-linear-mixed-effects-models-with-stan" class="nav-link" data-scroll-target="#simulation-based-linear-mixed-effects-models-with-stan"><strong>Simulation-based Linear Mixed-effects Models with Stan</strong></a></li>
+  <li><a href="#simulating-and-modeling-statistical-distributions-via-bayes.js" id="toc-simulating-and-modeling-statistical-distributions-via-bayes.js" class="nav-link" data-scroll-target="#simulating-and-modeling-statistical-distributions-via-bayes.js"><strong>Simulating and Modeling Statistical Distributions via bayes.js</strong></a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="essential-helix.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Essential Helix Commands</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Yingqi Jing </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 21, 2025</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p><strong>Note:</strong> In Helix, <code>Alt</code> (or <code>A</code>) functions similarly to <code>Cmd</code> in Vim. Importantly, Helix uses a <em>selection-first</em> model—you must select text before performing most actions.</p>
-<section id="navigation" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Navigation</h1>
-<ul>
-<li><code>h</code> / <code>j</code> / <code>k</code> / <code>l</code>: Move left, down, up, right</li>
-<li><code>w</code> / <code>W</code> / <code>e</code> / <code>E</code> / <code>b</code> / <code>B</code>: Word-based motion</li>
-<li><code>i</code> / <code>a</code> / <code>I</code> / <code>A</code>: Insert modes at various positions</li>
-<li><code>f</code> / <code>F</code> / <code>t</code> / <code>T</code>: Jump to characters in the current line</li>
-<li><code>gg</code>: Go to beginning of file</li>
-<li><code>ge</code>: Go to end of file</li>
-<li><code>gh</code>: Go to beginning of line</li>
-<li><code>gl</code>: Go to end of line</li>
-<li><code>u</code> / <code>U</code>: Undo / redo</li>
-<li><code>gr</code>: Go to reference</li>
-<li><code>gd</code>: Go to definition</li>
-</ul>
+<section id="understanding-jacobian-adjustments-for-constrained-parameters-in-stan" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-jacobian-adjustments-for-constrained-parameters-in-stan"><strong><a href="../statistical_modeling/Jacobian-adjustment-normal/understanding-jacobian-adjustment.html">Understanding Jacobian Adjustments for Constrained Parameters in Stan</a></strong></h3>
 </section>
-<section id="deletion-change" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Deletion &amp; Change</h1>
-<ul>
-<li><code>c</code>: Change character or selection</li>
-<li><code>xd</code> or <code>dd</code>: Delete line (remapped)</li>
-<li><code>:%d</code>: Delete entire file</li>
-</ul>
+<section id="simulation-based-linear-mixed-effects-models-with-stan" class="level3">
+<h3 class="anchored" data-anchor-id="simulation-based-linear-mixed-effects-models-with-stan"><strong><a href="../statistical_modeling/simulation-based-lmer-stan/simulation-based-lmer-stan.html">Simulation-based Linear Mixed-effects Models with Stan</a></strong></h3>
 </section>
-<section id="file-command-access" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> File &amp; Command Access</h1>
-<ul>
-<li><code>&lt;Space&gt; f</code>: File picker</li>
-<li><code>&lt;Space&gt; b</code>: Buffer picker (all files in buffer)</li>
-<li><code>&lt;Space&gt; ?</code>: Command palette</li>
-<li><code>ZZ</code>: Save and close</li>
-<li><code>ZQ</code>: Quit without saving</li>
-<li><code>:q</code>: Quit</li>
-</ul>
-</section>
-<section id="window-management" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Window Management</h1>
-<ul>
-<li><code>Ctrl-w v</code>: Split window vertically</li>
-<li><code>zz</code>: Center the current line on screen</li>
-</ul>
-</section>
-<section id="selection" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Selection</h1>
-<ul>
-<li><code>v 2w</code>: Select the next two words</li>
-<li><code>x</code>: Expand selection downward</li>
-<li><code>X</code>: Expand selection upward</li>
-<li><code>5x</code>: Select current + 4 lines below</li>
-<li><code>2xv</code>: Combine with <code>jk</code> to resize selection</li>
-<li><code>mi"</code>: Select inside quotes</li>
-<li><code>miw</code>: Select inside word</li>
-<li><code>mip</code>: Select inside paragraph</li>
-<li><code>%</code>: Select entire file</li>
-<li><code>%s&lt;pattern&gt;</code>: Select file and match pattern (regex supported); press <code>Esc</code> then <code>,</code> to exit multiple cursors</li>
-<li><code>&lt;Space&gt; /</code>: Grep for word in current directory, then <code>Ctrl+v</code> to open matches in vertical split</li>
-</ul>
-</section>
-<section id="multiple-cursors" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Multiple Cursors</h1>
-<ul>
-<li><code>C</code>: Duplicate cursor to the next match/line</li>
-<li><code>,</code>: Remove the most recent cursor</li>
-<li><code>vj C C C</code>: Select 2 lines and press <code>C</code> repeatedly to create multiple cursors every 2 lines</li>
-<li><code>Ctrl+A</code> / <code>Ctrl+E</code>: Move all cursors to start/end of line</li>
-<li><code>I</code> / <code>A</code>: Enter insert mode across all cursors</li>
-</ul>
-</section>
-<section id="copy-paste" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Copy &amp; Paste</h1>
-<ul>
-<li><code>x</code>: Select line</li>
-<li><code>p</code>: Paste from register</li>
-<li><code>&lt;Space&gt; y</code>: Copy selection to global register</li>
-</ul>
-</section>
-<section id="commands" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Commands</h1>
-<ul>
-<li><code>|</code> or <code>Cmd+!</code>: Pipe selection through shell command (e.g., <code>| sort</code> to sort lines)</li>
-</ul>
-</section>
-<section id="definitions-diagnostics" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Definitions &amp; Diagnostics</h1>
-<ul>
-<li><code>gd</code>: Go to definition</li>
-<li><code>Ctrl+o</code>: Go back to previous location</li>
-<li><code>Ctrl+i</code>: Go forward</li>
-<li><code>&lt;Space&gt; k</code>: Show function help</li>
-</ul>
-
+<section id="simulating-and-modeling-statistical-distributions-via-bayes.js" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-and-modeling-statistical-distributions-via-bayes.js"><strong><a href="../statistical_modeling/modeling_statistical_distributions/model_statistical_distributions.html">Simulating and Modeling Statistical Distributions via bayes.js</a></strong></h3>
 
 
 </section>

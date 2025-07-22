@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://JakeJing.github.io/datasciencetoolkit/programming/Jacobian-adjustment-normal/understanding-jacobian-adjustment.html</loc>
+    <loc>https://JakeJing.github.io/datasciencetoolkit/statistical_modeling/Jacobian-adjustment-normal/understanding-jacobian-adjustment.html</loc>
     <lastmod>2025-07-20T23:06:27.759Z</lastmod>
   </url>
   <url>
-    <loc>https://JakeJing.github.io/datasciencetoolkit/programming/dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.html</loc>
-    <lastmod>2025-07-22T07:54:43.301Z</lastmod>
+    <loc>https://JakeJing.github.io/datasciencetoolkit/statistical_modeling/simulation-based-lmer-stan/simulation-based-lmer-stan.html</loc>
+    <lastmod>2025-07-22T08:46:32.173Z</lastmod>
+  </url>
+  <url>
+    <loc>https://JakeJing.github.io/datasciencetoolkit/programming/coverpage.html</loc>
+    <lastmod>2025-07-22T12:24:14.869Z</lastmod>
   </url>
   <url>
     <loc>https://JakeJing.github.io/datasciencetoolkit/programming/intro-purrr/intro-purrr.html</loc>
@@ -45,11 +49,15 @@
     <lastmod>2025-07-21T23:47:33.657Z</lastmod>
   </url>
   <url>
-    <loc>https://JakeJing.github.io/datasciencetoolkit/programming/simulation-based-lmer-stan/simulation-based-lmer-stan.html</loc>
-    <lastmod>2025-07-22T08:46:32.173Z</lastmod>
+    <loc>https://JakeJing.github.io/datasciencetoolkit/programming/dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.html</loc>
+    <lastmod>2025-07-22T07:54:43.301Z</lastmod>
   </url>
   <url>
-    <loc>https://JakeJing.github.io/datasciencetoolkit/programming/coverpage.html</loc>
-    <lastmod>2025-07-22T08:56:30.421Z</lastmod>
+    <loc>https://JakeJing.github.io/datasciencetoolkit/statistical_modeling/modeling_statistical_distributions/model_statistical_distributions.html</loc>
+    <lastmod>2025-07-22T13:22:34.914Z</lastmod>
+  </url>
+  <url>
+    <loc>https://JakeJing.github.io/datasciencetoolkit/statistical_modeling/coverpage.html</loc>
+    <lastmod>2025-07-22T13:24:09.010Z</lastmod>
   </url>
 </urlset>
