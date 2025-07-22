@@ -1,0 +1,9 @@
+---
+title: ""
+---
+
+
+### **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** 
+### **[Simulation-based Linear Mixed-effects Models with Stan](simulation-based-lmer-stan/simulation-based-lmer-stan.qmd)** 
+### **[Simulating and Modeling Statistical Distributions via bayes.js](modeling_statistical_distributions/model_statistical_distributions.qmd)** 
+

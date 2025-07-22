@@ -7,6 +7,8 @@ website:
   description: "Comprehensive guides and tools for data science"
   navbar:
     left:
+      - href: statistical_modeling/coverpage.qmd
+        text: Statistical Modeling
       - href: programming/coverpage.qmd
         text: Programming
       - href: commandline/coverpage.qmd

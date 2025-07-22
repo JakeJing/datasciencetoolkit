@@ -3,11 +3,6 @@ title: ""
 ---
 
 
-## Stan
-
-### **[Understanding Jacobian Adjustments for Constrained Parameters in Stan](Jacobian-adjustment-normal/understanding-jacobian-adjustment.qmd)** 
-### **[simulation-based-lmer-stan](simulation-based-lmer-stan/simulation-based-lmer-stan.qmd)** 
-
 ## R programming
 
 ### **[Column-wise and Row-wise Operations in dplyr](dplyr-columnwise-rowwise/dplyr-columnwise-rowwise.qmd)**

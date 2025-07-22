@@ -1,0 +1,161 @@
+---
+title: "Simulating and Modeling Statistical Distributions via bayes.js"
+author: "Yingqi Jing"
+date: last-modified
+date-format: "MMMM D, YYYY"
+# Global table of contents settings
+toc: true
+toc-title: "Contents"
+toc-depth: 4
+# Global figure and table settings
+lof: true
+lot: true
+# Global numbering settings
+number-sections: true
+number-depth: 4
+# Global code styling
+code-block-border-left: "white"
+code-block-bg: "#f8f8f8"
+# Global document settings
+keep-tex: false
+colorlinks: true
+format:
+  html:
+    math: mathjax # or katex
+    # theme: materia
+    # fig-fold: false
+    #css: 
+    #  - ./css/shadenote.css
+  # pdf: # move before if you want to render it as a pdf
+  #   pdf-engine: xelatex
+  #   code-font: "Inconsolata"
+  #   include-in-header: ../../cssshadenote/shadenote.tex # only for pdf
+  
+# fig-format: pdf # retina, png, jpeg, svg, or pdf
+# fig-cap-location: bottom
+# fig-width: 16
+# fig-height: 8
+code-fold: false
+# bibliography: ["/Users/jakejing/switchdrive/bib/references.bib"]
+# csl: /Users/jakejing/switchdrive/bib/unified-style-linguistics.csl
+link-citations: true
+highlight-style: atom-one-light # arrow/zenburn/pygments/tango/zenburn or themes/default.theme
+execute:
+  warning: false
+filters: 
+  - include-code-files # installed in your working dir (https://github.com/quarto-ext/include-code-files#readme) via >> quarto add quarto-ext/include-code-files
+  - shadenote # has been integrated in include-code-files
+  - social-embeds # >> quarto install extension sellorm/quarto-social-embeds
+---
+
+
+```{r}
+#| label: setup
+#| echo: FALSE
+#| include: FALSE
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(magrittr)
+library(kableExtra) # kable
+library(Rcpp)
+library(RcppArmadillo)
+library(inline) # masked from ‘package:Rcpp’ registerPlugin
+library(microbenchmark) # microbenchmark timings
+library(RcppParallel)
+library(RInside)
+library(data.table) # fread
+library(foreach) # foreach
+library(parallel) # mclapply
+library(doParallel)
+registerDoParallel(cores = 6)
+library(rstan)
+library(devtools)
+library(pdftools) # tikz
+library(tikzDevice) # tikz device
+library(purrr)
+library(glue)
+library(ggpubr) # ggarrange
+# source('./Functions/Functions.R')
+# devtools::install_github("r-lib/conflicted")
+library(conflicted)
+knit_hooks$set(crop = hook_pdfcrop, pars = function(before, options, envir) {
+  if (before) {
+    par(family = my.font)
+  } else {
+    NULL
+  }
+})
+opts_chunk$set(
+  fig.path = "figures/",
+  # dev = "quartz_pdf", # better for plot resolution than cairo_pdf, comment this to avoid folding plot in html
+  # dev = "png",
+  # dpi = 300,
+  dev.args = list(bg = "white"), # or quartz_pdf (for lattice)
+  fig.height = 8,
+  fig.width = 10,
+  results = "hold", # this is right way of holding results
+  message = F,
+  warning = F,
+  autodep = T,
+  cache.comments = F,
+  crop = F,
+  comment = NA,
+  pars = T
+)
+# graphics setup:
+my.font <- "Helvetica"
+# ggplot
+theme_set(theme_bw(base_size = 24) +
+  theme(
+    text = element_text(family = my.font),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  ))
+options(width = 180, knitr.kable.NA = "", knitr.table.format = "latex")
+# citations_1 <- tempfile(fileext = ".bib")
+# file.copy(from = here::here("/Users/jakejing/switchdrive/bib/references.bib"), to = citations_1)
+```
+
+```{r}
+#| label: color the stan code chunk and conflict preferences
+#| results: asis
+#| echo: false
+library(devtools) # source_url
+source("~/git/conflict_prefer/conflict_prefer.R")
+```
+
+\clearpage
+
+I have been thinking about building a web app for simulating data with given parameters and recovering the parameters with Bayesian MCMC samplers in JavaScript. This web app can not only make the procedures more transparent, but also help us understand the magic of the Bayesian MCMC approach. More importantly, I have benefited from this simulation-based way of thinking, so I would like to promote it in my blog.
+
+I looked for some off-the-shelf software online and found a JS library bayes.js developed by Rasmus Bååth. He also wrote a blog to introduce the library. I strongly recommend you first to read his blog to get some key ideas behind it. The library includes an adaptive MCMC sampler (AmwgSampler) in mcmc.js and some common probability distributions in distributions.js. There are also some examples, e.g., you can use bayes.js to fit a Normal distribution and plot the posterior distributions of parameters via plotly.js.
+
+This blog heavily relies on Bååth's library and his implementations. I appreciate his efforts to build a web app for Bayesian data analysis in JavaScript. Here I made some slight adjustments.
+
+(1) Include the data generating process by using d3.js; You can type console.log(data) or data in your console to check the simulated data.
+
+(2) Simultaneously update the posterior distributions with the true parameters indicated by red vertical lines;
+
+(3) Enable and disable buttons and textContent to make it more user-friendly;
+
+(4) Add buttons to display messages and warnings.
+
+These changes are purely based on my personal tastes since I want to simulate data with valid parameters from a probabilistic distribution and check the performance of the posterior estimates against the original parameter values. With some help from ChatGPT, I implemented the web app and deployed it inside my personal webpage powered by Jekyll. Here is the web app for Bayesian MCMC for Normal distributions. If you prefer a standalone version, pls check [this page](https://jakejing.github.io/bayes_mcmc_plot/).
+
+<p class="codepen" data-height="500" data-default-tab="result" data-slug-hash="gOdVBBV" data-pen-title="bayes.js normal medium" data-user="jakejing" style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/jakejing/pen/gOdVBBV">
+  bayes.js normal medium</a> by Yingqi Jing (<a href="https://codepen.io/jakejing">@jakejing</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://public.codepenassets.com/embed/index.js"></script>
+
+**Useful links:**
+
+- Simulating and modeling Normal distributions via bayes.js ([standalone page](https://jakejing.github.io/bayes_mcmc_plot/))
+- [HMC algorithm demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianMC&target=banana)
+- [bayes.js blog](https://www.sumsar.net/blog/2015/12/bayes-js-a-small-library-for-doing-mcmc-in-the-browser/)
+
+
+

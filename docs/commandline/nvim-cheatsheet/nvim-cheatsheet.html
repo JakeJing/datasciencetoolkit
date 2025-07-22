@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Yingqi Jing">
+<meta name="dcterms.date" content="2025-07-21">
+
+<title>Neovim Cheat Sheet: Essential Tricks and Shortcuts – Data Science Toolkit</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../css/webstyles.css">
+<link rel="stylesheet" href="../../css/blogstyles.css">
+<link rel="stylesheet" href="../../css/shadenote.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Data Science Toolkit</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../programming/coverpage.html"> 
+<span class="menu-text">Programming</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../commandline/coverpage.html"> 
+<span class="menu-text">Command Line</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://jakejing.github.io/datasciencetoolkit/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Neovim Cheat Sheet: Essential Tricks and Shortcuts</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation"><span class="header-section-number">1</span> Installation</a></li>
+  <li><a href="#navigation-movements" id="toc-navigation-movements" class="nav-link" data-scroll-target="#navigation-movements"><span class="header-section-number">2</span> Navigation &amp; Movements</a></li>
+  <li><a href="#bookmarks-with-telescope" id="toc-bookmarks-with-telescope" class="nav-link" data-scroll-target="#bookmarks-with-telescope"><span class="header-section-number">3</span> Bookmarks (with Telescope)</a></li>
+  <li><a href="#deleting-text" id="toc-deleting-text" class="nav-link" data-scroll-target="#deleting-text"><span class="header-section-number">4</span> Deleting Text</a></li>
+  <li><a href="#joining-lines" id="toc-joining-lines" class="nav-link" data-scroll-target="#joining-lines"><span class="header-section-number">5</span> Joining Lines</a></li>
+  <li><a href="#increment-numbers" id="toc-increment-numbers" class="nav-link" data-scroll-target="#increment-numbers"><span class="header-section-number">6</span> Increment Numbers</a></li>
+  <li><a href="#word-count" id="toc-word-count" class="nav-link" data-scroll-target="#word-count"><span class="header-section-number">7</span> Word Count</a></li>
+  <li><a href="#selection-visual-mode" id="toc-selection-visual-mode" class="nav-link" data-scroll-target="#selection-visual-mode"><span class="header-section-number">8</span> Selection (Visual Mode)</a></li>
+  <li><a href="#multi-line-insert-append" id="toc-multi-line-insert-append" class="nav-link" data-scroll-target="#multi-line-insert-append"><span class="header-section-number">9</span> Multi-line Insert &amp; Append</a></li>
+  <li><a href="#editing-text" id="toc-editing-text" class="nav-link" data-scroll-target="#editing-text"><span class="header-section-number">10</span> Editing Text</a></li>
+  <li><a href="#yank-paste" id="toc-yank-paste" class="nav-link" data-scroll-target="#yank-paste"><span class="header-section-number">11</span> Yank &amp; Paste</a></li>
+  <li><a href="#substitution" id="toc-substitution" class="nav-link" data-scroll-target="#substitution"><span class="header-section-number">12</span> Substitution</a></li>
+  <li><a href="#repeating-undoing" id="toc-repeating-undoing" class="nav-link" data-scroll-target="#repeating-undoing"><span class="header-section-number">13</span> Repeating &amp; Undoing</a></li>
+  <li><a href="#quit-save" id="toc-quit-save" class="nav-link" data-scroll-target="#quit-save"><span class="header-section-number">14</span> Quit &amp; Save</a></li>
+  <li><a href="#key-mapping-help" id="toc-key-mapping-help" class="nav-link" data-scroll-target="#key-mapping-help"><span class="header-section-number">15</span> Key Mapping &amp; Help</a>
+  <ul>
+  <li><a href="#special-keys" id="toc-special-keys" class="nav-link" data-scroll-target="#special-keys"><span class="header-section-number">15.1</span> Special Keys</a></li>
+  <li><a href="#check-mappings" id="toc-check-mappings" class="nav-link" data-scroll-target="#check-mappings"><span class="header-section-number">15.2</span> Check Mappings</a></li>
+  <li><a href="#help" id="toc-help" class="nav-link" data-scroll-target="#help"><span class="header-section-number">15.3</span> Help</a></li>
+  </ul></li>
+  <li><a href="#terminal-tricks" id="toc-terminal-tricks" class="nav-link" data-scroll-target="#terminal-tricks"><span class="header-section-number">16</span> Terminal Tricks</a></li>
+  <li><a href="#termvifm-zoxide" id="toc-termvifm-zoxide" class="nav-link" data-scroll-target="#termvifm-zoxide"><span class="header-section-number">17</span> TermVifm + Zoxide</a></li>
+  <li><a href="#search" id="toc-search" class="nav-link" data-scroll-target="#search"><span class="header-section-number">18</span> Search</a></li>
+  <li><a href="#buffers" id="toc-buffers" class="nav-link" data-scroll-target="#buffers"><span class="header-section-number">19</span> Buffers</a></li>
+  <li><a href="#window-management" id="toc-window-management" class="nav-link" data-scroll-target="#window-management"><span class="header-section-number">20</span> Window Management</a></li>
+  <li><a href="#git-with-lazygit" id="toc-git-with-lazygit" class="nav-link" data-scroll-target="#git-with-lazygit"><span class="header-section-number">21</span> Git with LazyGit</a></li>
+  <li><a href="#linting-formatting" id="toc-linting-formatting" class="nav-link" data-scroll-target="#linting-formatting"><span class="header-section-number">22</span> Linting &amp; Formatting</a></li>
+  <li><a href="#registers-special-characters" id="toc-registers-special-characters" class="nav-link" data-scroll-target="#registers-special-characters"><span class="header-section-number">23</span> Registers &amp; Special Characters</a></li>
+  <li><a href="#cmdline-modes" id="toc-cmdline-modes" class="nav-link" data-scroll-target="#cmdline-modes"><span class="header-section-number">24</span> Cmdline Modes</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="nvim-cheatsheet.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Neovim Cheat Sheet: Essential Tricks and Shortcuts</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Yingqi Jing </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 21, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="installation" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="installation"><span class="header-section-number">1</span> Installation</h2>
+<ul>
+<li>Clone the dotfiles and copy the Neovim config into your <code>~/.config</code> directory:</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/JakeJing/dotfiles.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> dotfiles/.config/nvim <span class="at">-P</span> ~/.config/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Open <code>plugins.lua</code> and type <code>:w</code> to launch the auto-installation.</li>
+<li>Use <code>:checkhealth</code> to verify that all dependencies are properly set up.</li>
+</ul>
+</section>
+<section id="navigation-movements" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="navigation-movements"><span class="header-section-number">2</span> Navigation &amp; Movements</h2>
+<ul>
+<li><code>hjkl</code>: move left, down, up, right</li>
+<li><code>Ctrl+d/u</code>: scroll down/up one page</li>
+<li><code>Ctrl+n/p</code>: next/previous file in window</li>
+<li><code>i/I</code>: insert before cursor / at line start</li>
+<li><code>a/A</code>: append after cursor / at line end</li>
+<li><code>0</code> / <code>^</code>: go to line start</li>
+<li><code>$</code>: go to line end</li>
+<li><code>o/O</code>: new line below/above</li>
+<li><code>%</code>: jump between matching brackets</li>
+<li><code>b/e/w</code>: word navigation (back, end, next)</li>
+<li><code>f{x}</code> / <code>F{x}</code>: move to char <code>{x}</code> forward/back</li>
+<li><code>t{x}</code> / <code>T{x}</code>: move before char <code>{x}</code> forward/back</li>
+<li><code>''</code> or <code>g:</code>: go back to previous position</li>
+<li><code>o</code> (in visual mode): toggle selection endpoint</li>
+</ul>
+</section>
+<section id="bookmarks-with-telescope" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="bookmarks-with-telescope"><span class="header-section-number">3</span> Bookmarks (with Telescope)</h2>
+<ul>
+<li><code>mm</code>: toggle bookmark</li>
+<li><code>Shift+n</code>: next bookmark</li>
+<li><code>Shift+b</code>: previous bookmark</li>
+<li><code>ma</code>: view all bookmarks</li>
+<li><code>:Telescope vim_bookmarks all</code>: list all bookmarks</li>
+<li><code>:Telescope vim_bookmarks current_file</code>: list for current file</li>
+</ul>
+</section>
+<section id="deleting-text" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="deleting-text"><span class="header-section-number">4</span> Deleting Text</h2>
+<ul>
+<li><code>dd</code>: delete line</li>
+<li><code>3dd</code>: delete 3 lines</li>
+<li><code>D</code> or <code>d$</code>: delete to line end</li>
+<li><code>d0</code>: delete to line start</li>
+<li><code>x</code>: delete character under cursor</li>
+<li><code>dw</code>, <code>diw</code>, <code>daw</code>: delete word (various scopes)</li>
+<li><code>dip</code>: delete paragraph</li>
+<li><code>di"</code>: delete inside quotes</li>
+<li><code>:%d</code>: delete entire file content</li>
+<li><code>ci"</code> / <code>ci(</code>: delete and insert inside quotes/brackets</li>
+</ul>
+</section>
+<section id="joining-lines" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="joining-lines"><span class="header-section-number">5</span> Joining Lines</h2>
+<ul>
+<li><code>J</code>: join lines with space</li>
+<li><code>gJ</code>: join lines without space</li>
+</ul>
+</section>
+<section id="increment-numbers" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="increment-numbers"><span class="header-section-number">6</span> Increment Numbers</h2>
+<ul>
+<li>Select numbers with <code>Ctrl+v</code>, then <code>g Ctrl+a</code> to increment</li>
+</ul>
+</section>
+<section id="word-count" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="word-count"><span class="header-section-number">7</span> Word Count</h2>
+<ul>
+<li><code>:WordCount</code>: custom word count (requires user-defined function)</li>
+<li><code>&lt;leader&gt;wc</code>: shortcut for word count</li>
+</ul>
+</section>
+<section id="selection-visual-mode" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="selection-visual-mode"><span class="header-section-number">8</span> Selection (Visual Mode)</h2>
+<ul>
+<li><code>v</code>, <code>V</code>, <code>Ctrl+v</code>: character, line, and block selection</li>
+<li><code>viw</code>, <code>vaw</code>: inside/around word</li>
+<li><code>vi{</code>: inside block (like function)</li>
+<li><code>f{char}</code> in visual mode: fast selection</li>
+</ul>
+</section>
+<section id="multi-line-insert-append" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="multi-line-insert-append"><span class="header-section-number">9</span> Multi-line Insert &amp; Append</h2>
+<blockquote class="blockquote">
+<p>Note: Only works in <strong>visual block mode</strong> (<code>Ctrl+v</code>).</p>
+</blockquote>
+<ul>
+<li><strong>Insert start</strong>: <code>Ctrl+v</code>, select, <code>Shift+i</code>, type, then <code>Esc</code></li>
+<li><strong>Append end</strong>: <code>Ctrl+v</code>, select, <code>Shift+a</code>, type, then <code>Esc</code></li>
+<li><strong>Change text</strong>: select block, press <code>c</code>, type, then <code>Esc</code></li>
+</ul>
+</section>
+<section id="editing-text" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="editing-text"><span class="header-section-number">10</span> Editing Text</h2>
+<ul>
+<li><code>ci(</code>: change inside parentheses</li>
+<li><code>cip</code>: change inside paragraph</li>
+<li><code>cw</code>: change word</li>
+</ul>
+</section>
+<section id="yank-paste" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="yank-paste"><span class="header-section-number">11</span> Yank &amp; Paste</h2>
+<ul>
+<li><p><code>yy</code>, <code>yiw</code>, <code>ya(</code>, <code>y2w</code>: yank lines, words, brackets</p></li>
+<li><p>Use <a href="https://github.com/AckslD/nvim-neoclip.lua">neoclip</a> for yank history:</p>
+<ul>
+<li><code>&lt;C-c&gt;</code> to yank</li>
+<li><code>&lt;C-p&gt;</code> to paste from history</li>
+</ul></li>
+</ul>
+</section>
+<section id="substitution" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="substitution"><span class="header-section-number">12</span> Substitution</h2>
+<ul>
+<li><p><code>S</code>: start substitution (<code>:%s//g</code> via remap)</p></li>
+<li><p><code>cgn</code>: change next match, repeat with <code>.</code></p></li>
+<li><p>Regex substitution:</p>
+<pre class="vim"><code>:%s/[-.+/a-zA-Z0-9"$]*\ze:/`\0`/g</code></pre></li>
+<li><p><code>R</code>: overwrite text</p></li>
+<li><p><code>:'&lt;,'&gt;s/old/new/g</code>: substitute in selection</p></li>
+<li><p><code>:cdo s/old/new/g</code>: substitute across quickfix list</p></li>
+</ul>
+</section>
+<section id="repeating-undoing" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="repeating-undoing"><span class="header-section-number">13</span> Repeating &amp; Undoing</h2>
+<ul>
+<li><code>.</code>: repeat last change</li>
+<li><code>u</code> / <code>U</code>: undo / undo line</li>
+<li><code>Ctrl+r</code>: redo</li>
+<li><code>Ctrl+s</code>: open terminal in vertical split</li>
+<li><code>:vs | :term</code>: open vertical terminal</li>
+</ul>
+</section>
+<section id="quit-save" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="quit-save"><span class="header-section-number">14</span> Quit &amp; Save</h2>
+<ul>
+<li><code>ZZ</code>: save and quit</li>
+<li><code>ZQ</code>: quit without saving</li>
+</ul>
+</section>
+<section id="key-mapping-help" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="key-mapping-help"><span class="header-section-number">15</span> Key Mapping &amp; Help</h2>
+<section id="special-keys" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="special-keys"><span class="header-section-number">15.1</span> Special Keys</h3>
+<pre class="vim"><code>&lt;Tab&gt;, &lt;CR&gt;, &lt;Esc&gt;, &lt;Space&gt;, &lt;A-j&gt;, &lt;C-s&gt;, &lt;Up&gt;, &lt;F1&gt;...&lt;F12&gt;, etc.</code></pre>
+</section>
+<section id="check-mappings" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="check-mappings"><span class="header-section-number">15.2</span> Check Mappings</h3>
+<pre class="vim"><code>:imap &lt;A-j&gt;
+:verbose imap &lt;Tab&gt;</code></pre>
+</section>
+<section id="help" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="help"><span class="header-section-number">15.3</span> Help</h3>
+<ul>
+<li><code>:h {key}</code> or <code>:help ctrl-w_&lt;</code></li>
+<li><code>:h telescope.command</code>, <code>:h regex</code></li>
+<li><code>fh</code> or <code>&lt;leader&gt;fh</code>: floating help</li>
+</ul>
+</section>
+</section>
+<section id="terminal-tricks" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="terminal-tricks"><span class="header-section-number">16</span> Terminal Tricks</h2>
+<ul>
+<li><code>Ctrl+s</code>: toggle floating terminal</li>
+<li><code>:r !ls</code>: insert output of shell command</li>
+</ul>
+</section>
+<section id="termvifm-zoxide" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="termvifm-zoxide"><span class="header-section-number">17</span> TermVifm + Zoxide</h2>
+<ul>
+<li><p>Bind <code>vf</code> to launch <code>vifm</code></p></li>
+<li><p>Use <code>zoxide</code> with <code>&lt;leader&gt;Z</code> to jump to dirs</p>
+<ul>
+<li><p>Install with <code>brew install zoxide</code></p></li>
+<li><p>Add to <code>config.fish</code>:</p>
+<pre class="fish"><code>zoxide init fish | source</code></pre></li>
+</ul></li>
+</ul>
+</section>
+<section id="search" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="search"><span class="header-section-number">18</span> Search</h2>
+<ul>
+<li><code>ff</code>: find file</li>
+<li><code>fa</code>: find all in buffer</li>
+<li><code>fw</code>: find word</li>
+<li><code>'Search</code>: exact match</li>
+<li><code>:set hlsearch</code> / <code>:nohlsearch</code>: toggle highlights</li>
+</ul>
+</section>
+<section id="buffers" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="buffers"><span class="header-section-number">19</span> Buffers</h2>
+<ul>
+<li><code>:bfirst</code>, <code>:blast</code>, <code>:bnext</code>, <code>:bprevious</code></li>
+<li><code>:ls</code>: list buffers</li>
+<li><code>:bd [num]</code>: close buffer</li>
+<li><code>:b &lt;TAB&gt;</code>: autocomplete open buffers</li>
+<li><code>Ctrl+^</code>: toggle last buffer</li>
+</ul>
+</section>
+<section id="window-management" class="level2" data-number="20">
+<h2 data-number="20" class="anchored" data-anchor-id="window-management"><span class="header-section-number">20</span> Window Management</h2>
+<ul>
+<li><code>Ctrl+w w</code>: switch windows</li>
+<li><code>Ctrl+w h/l</code>: left/right</li>
+<li><code>Ctrl+w _</code>: maximize</li>
+<li><code>Ctrl+w =</code>: equalize</li>
+<li><code>Ctrl+w R</code>: reverse splits</li>
+<li><code>Ctrl+w t Ctrl+w K</code>: horizontal → vertical</li>
+<li><code>Ctrl+w t Ctrl+w H</code>: vertical → horizontal</li>
+<li><code>Ctrl+Cmd+F</code> or <code>fn+F</code>: full screen</li>
+</ul>
+</section>
+<section id="git-with-lazygit" class="level2" data-number="21">
+<h2 data-number="21" class="anchored" data-anchor-id="git-with-lazygit"><span class="header-section-number">21</span> Git with LazyGit</h2>
+<ul>
+<li><code>Ctrl+g</code>: open LazyGit</li>
+<li><code>c</code>: commit</li>
+<li><code>Shift+p</code>: push</li>
+<li><code>?</code>: help</li>
+<li><code>gl</code>: git logs</li>
+</ul>
+</section>
+<section id="linting-formatting" class="level2" data-number="22">
+<h2 data-number="22" class="anchored" data-anchor-id="linting-formatting"><span class="header-section-number">22</span> Linting &amp; Formatting</h2>
+<ul>
+<li><code>:NullLsInfo</code>: see current null-ls status</li>
+<li><code>:echo executable("eslint")</code>: check if installed</li>
+<li><code>:LspStop</code>: stop diagnostics</li>
+</ul>
+</section>
+<section id="registers-special-characters" class="level2" data-number="23">
+<h2 data-number="23" class="anchored" data-anchor-id="registers-special-characters"><span class="header-section-number">23</span> Registers &amp; Special Characters</h2>
+<pre class="vim"><code>"%": current file
+"#": alternate file
+"*", "+": system clipboard
+"/": last search
+":": last command
+"-": last small delete
+".": last insert
+"=": expression register</code></pre>
+</section>
+<section id="cmdline-modes" class="level2" data-number="24">
+<h2 data-number="24" class="anchored" data-anchor-id="cmdline-modes"><span class="header-section-number">24</span> Cmdline Modes</h2>
+<pre class="vim"><code>:   Normal command
+&gt;   Debug mode
+/   Forward search
+?   Backward search
+=   Expression
+@   Input()
+-   Insert/append text</code></pre>
+<ul>
+<li><code>q:</code>: show command history</li>
+</ul>
+
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/JakeJing\.github\.io\/datasciencetoolkit\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
