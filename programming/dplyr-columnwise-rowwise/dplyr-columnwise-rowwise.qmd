@@ -1,5 +1,5 @@
 ---
-title: "Column-wise and row-wise operations in dplyr"
+title: "Column-wise and Row-wise Operations in `dplyr`"
 author: "Yingqi Jing"
 date: last-modified
 date-format: "MMMM D, YYYY"

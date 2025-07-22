@@ -219,10 +219,8 @@ window.Quarto = {
   <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization"><span class="header-section-number">1.4</span> Visualization</a></li>
   </ul></li>
   <li><a href="#linear-regression-via-splitted-structures" id="toc-linear-regression-via-splitted-structures" class="nav-link" data-scroll-target="#linear-regression-via-splitted-structures"><span class="header-section-number">2</span> Linear regression via splitted structures</a></li>
-  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">3</span> Concluding remarks</a>
-  <ul>
-  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">3.1</span> Useful links</a></li>
-  </ul></li>
+  <li><a href="#concluding-remarks" id="toc-concluding-remarks" class="nav-link" data-scroll-target="#concluding-remarks"><span class="header-section-number">3</span> Concluding remarks</a></li>
+  <li><a href="#useful-links" id="toc-useful-links" class="nav-link" data-scroll-target="#useful-links"><span class="header-section-number">4</span> Useful links</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="nested_splitted_structure.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -418,7 +416,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1440"></p>
-<figcaption>Linear model with split data</figcaption>
+<figcaption>Linear regression model with split data</figcaption>
 </figure>
 </div>
 </div>
@@ -431,8 +429,9 @@ window.Quarto = {
 <li>Nested data structure is useful when you want to apply several functions to each model object and the results can be directly saved in a tidy data.frame. For the splitted data structure, you need to apply the function to each model object separately.</li>
 <li>Nested structure often relies on lists for data simulation and packing model outputs, whereas the splitted structure needs to convert and combine the outputs into data.frames for visualization.</li>
 </ul>
-<section id="useful-links" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="useful-links"><span class="header-section-number">3.1</span> Useful links</h2>
+</section>
+<section id="useful-links" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Useful links</h1>
 <ul>
 <li><a href="https://towardsdev.com/a-gentle-introduction-to-purrr-4cfe78e92392">https://towardsdev.com/a-gentle-introduction-to-purrr-4cfe78e92392</a></li>
 <li><a href="https://medium.com/p/da3638b5f46c">https://medium.com/p/da3638b5f46c</a></li>
@@ -441,7 +440,6 @@ window.Quarto = {
 
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -537,7 +535,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/JakeJing\.github\.io\/datasciencetoolkit\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
